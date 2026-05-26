@@ -76,7 +76,7 @@ Container card accent colours: `c-blue`, `c-red`, `c-green`, `c-amber`, `c-purpl
 | Element ID | Behaviour |
 |---|---|
 | `#date-created` | Reads `data-created="YYYY-MM-DD"` from the element itself; formats as `Mon D, YYYY` |
-| `#last-updated` | Always renders today's date as `Mon D, YYYY` |
+| `#last-updated` | Always (except for /index.html) renders today's date as `Mon D, YYYY` |
 
 **Substack feed** — if `#substack-feed` exists, fetches `https://kasunben.substack.com/feed` via the `allorigins.win` CORS proxy, parses RSS 2.0, and renders up to 10 posts as `.toc-list` `<li>` links. Falls back to a plain Substack link on error.
 
@@ -95,7 +95,7 @@ Starts with a home icon SVG (linked to `/`), followed by breadcrumb text:
 ```html
 <div class="footer">
   <div class="footer-brand">
-    [copyleft SVG]  <a href="/">kasunben</a> · <span class="footer-date">created <span id="date-created" data-created="YYYY-MM-DD"></span></span> · <span class="footer-date">updated <span id="last-updated"></span></span>
+    [copyleft SVG]  <a href="/">kasunben</a> · <span class="footer-date">created at <span id="date-created" data-created="YYYY-MM-DD"></span></span> · <span class="footer-date">updated at <span id="last-updated"></span></span>
   </div>
   <!-- index.html: icon-only social links -->
   <div class="footer-social"> … </div>
@@ -107,7 +107,7 @@ Starts with a home icon SVG (linked to `/`), followed by breadcrumb text:
 ```
 
 - `#date-created` requires `data-created="YYYY-MM-DD"` — hardcode the actual creation date per page
-- `#last-updated` is always today's date (populated by JS)
+- `#last-updated` is always (except for /index.html) today's date (populated by JS)
 - Footer collapses to a vertical stack on screens ≤ 540 px
 
 ### Copyleft SVG (reuse verbatim)
