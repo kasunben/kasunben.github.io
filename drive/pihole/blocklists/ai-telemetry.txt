@@ -1,0 +1,27 @@
+# OpenAI telemetry / analytics (non-core)
+events.statsigapi.net
+oai-telemetry.openai.com
+
+# Optional (aggressive)
+# chat.openai.com.cdn.cloudflare.net
+
+# Google AI / Gemini related telemetry signals
+ai.googleusercontent.com
+app-measurement.com
+generativelanguage-pa.googleapis.com
+
+# Microsoft Copilot / related telemetry (non-core)
+copilot-telemetry.microsoft.com
+vortex.data.microsoft.com
+
+# Meta AI related telemetry signals (non-core)
+ai.facebook.com
+analytics.facebook.com
+
+# Anthropic telemetry / analytics (non-core)
+stats.anthropic.com
+telemetry.anthropic.com
+
+# Hugging Face telemetry / metrics (non-core)
+hf-metrics.com
+telemetry.huggingface.co
