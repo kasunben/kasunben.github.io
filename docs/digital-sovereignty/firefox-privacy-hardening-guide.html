@@ -1,87 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Firefox: Arkenfox + Container Setup — Field Notes</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Firefox: Arkenfox + Container Setup — Field Notes</title>
 
-<meta name="description" content="Harden Firefox with Arkenfox user.js and multi-account containers. Covers threat modelling, uBlock Origin medium mode, container structure, and Brave as a fallback.">
-<meta name="author" content="kasunben">
-<link rel="canonical" href="https://kasunben.openfs.io/docs/digital-sovereignty/firefox-privacy-hardening-guide.html">
+  <meta name="description"
+    content="Harden Firefox with Arkenfox user.js and multi-account containers. Covers threat modelling, uBlock Origin medium mode, container structure, and Brave as a fallback.">
+  <meta name="author" content="kasunben">
+  <link rel="canonical" href="https://kasunben.openfs.io/docs/digital-sovereignty/firefox-privacy-hardening-guide.html">
 
-<!-- Open Graph -->
-<meta property="og:type" content="article">
-<meta property="og:url" content="https://kasunben.openfs.io/docs/digital-sovereignty/firefox-privacy-hardening-guide.html">
-<meta property="og:title" content="Firefox: Arkenfox + Container Setup — Field Notes">
-<meta property="og:description" content="Harden Firefox with Arkenfox user.js and multi-account containers. Covers threat modelling, uBlock Origin medium mode, container structure, and Brave as a fallback.">
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:url"
+    content="https://kasunben.openfs.io/docs/digital-sovereignty/firefox-privacy-hardening-guide.html">
+  <meta property="og:title" content="Firefox: Arkenfox + Container Setup — Field Notes">
+  <meta property="og:description"
+    content="Harden Firefox with Arkenfox user.js and multi-account containers. Covers threat modelling, uBlock Origin medium mode, container structure, and Brave as a fallback.">
 
-<!-- Twitter Card -->
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Firefox: Arkenfox + Container Setup — Field Notes">
-<meta name="twitter:description" content="Harden Firefox with Arkenfox user.js and multi-account containers. Covers threat modelling, uBlock Origin medium mode, container structure, and Brave as a fallback.">
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Firefox: Arkenfox + Container Setup — Field Notes">
+  <meta name="twitter:description"
+    content="Harden Firefox with Arkenfox user.js and multi-account containers. Covers threat modelling, uBlock Origin medium mode, container structure, and Brave as a fallback.">
 
-<link rel="stylesheet" href="../../css/theme.css">
+  <script defer src="https://cloud.umami.is/script.js" data-website-id="5496b596-08aa-44db-9bcc-696d4f6f7491"></script>
+
+  <link rel="stylesheet" href="../../css/theme.css">
 </head>
+
 <body>
 
-<div class="header">
-  <div class="header-eyebrow"><a href="/"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-label="Home"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg></a> · Docs · Digital Sovereignty</div>
-  <h1>Firefox: <span>Arkenfox</span> + Container Setup</h1>
-  <p class="header-sub">Targeted threat model: corporations, ISPs, state-level actors. Assumes Firefox as primary browser, Brave as fallback.</p>
-</div>
-
-<div class="toc">
-  <div class="toc-title">Contents</div>
-  <ul class="toc-list">
-    <li><a href="#part1">Part 1 — Arkenfox user.js setup</a></li>
-    <li><a href="#part2">Part 2 — uBlock Origin in medium mode</a></li>
-    <li><a href="#part3">Part 3 — Firefox container structure (8 containers)</a></li>
-    <li><a href="#part4">Part 4 — Brave cleanup</a></li>
-    <li><a href="#part5">Part 5 — Final checklist</a></li>
-  </ul>
-</div>
-
-<!-- PART 1 -->
-<div class="section-label" id="part1">
-  <span class="section-num">01</span>
-  <h2>Arkenfox user.js setup</h2>
-</div>
-
-<p>Arkenfox is a maintained <code>user.js</code> file that overrides 
-Firefox's defaults at the config level — no extension required. It 
-covers fingerprint resistance, telemetry, network leaks, and history 
-handling that extensions can't touch.</p>
-
-<div class="callout info">
-  <strong>What it does that uBlock Origin can't:</strong> disables WebGL
- fingerprinting, canvas API, AudioContext, font enumeration, window 
-sizing leaks, and Firefox's own telemetry and studies. These are 
-browser-engine features — no extension has the scope to block them.
-</div>
-
-<h3>Step 1 — Locate your Firefox profile</h3>
-<div class="steps">
-  <div class="step">
-    <div class="step-n">01</div>
-    <div class="step-body">Open Firefox and navigate to <code>about:profiles</code><span class="note">Find your active profile — it will say "This is the profile in use"</span></div>
+  <div class="header">
+    <div class="header-eyebrow"><a href="/"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"
+          aria-label="Home">
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+        </svg></a> · Docs · Digital Sovereignty</div>
+    <h1>Firefox: <span>Arkenfox</span> + Container Setup</h1>
+    <p class="header-sub">Targeted threat model: corporations, ISPs, state-level actors. Assumes Firefox as primary
+      browser, Brave as fallback.</p>
   </div>
-  <div class="step">
-    <div class="step-n">02</div>
-    <div class="step-body">Click <strong>Open Folder</strong> next to "Root Directory"<span class="note">On macOS: ~/Library/Application Support/Firefox/Profiles/xxxxxxxx.default</span></div>
-  </div>
-  <div class="step">
-    <div class="step-n">03</div>
-    <div class="step-body">Note this path — you'll put arkenfox files here</div>
-  </div>
-</div>
 
-<h3>Step 2 — Download arkenfox</h3>
-<div class="code-block">
-  <div class="code-header">
-    <span class="code-label">terminal</span>
-    <button class="copy-btn" onclick="copyCode(this)">copy</button>
+  <div class="toc">
+    <div class="toc-title">Contents</div>
+    <ul class="toc-list">
+      <li><a href="#part1">Part 1 — Arkenfox user.js setup</a></li>
+      <li><a href="#part2">Part 2 — uBlock Origin in medium mode</a></li>
+      <li><a href="#part3">Part 3 — Firefox container structure (8 containers)</a></li>
+      <li><a href="#part4">Part 4 — Brave cleanup</a></li>
+      <li><a href="#part5">Part 5 — Final checklist</a></li>
+    </ul>
   </div>
-  <pre><span class="cm"># Navigate to your profile directory</span>
+
+  <!-- PART 1 -->
+  <div class="section-label" id="part1">
+    <span class="section-num">01</span>
+    <h2>Arkenfox user.js setup</h2>
+  </div>
+
+  <p>Arkenfox is a maintained <code>user.js</code> file that overrides
+    Firefox's defaults at the config level — no extension required. It
+    covers fingerprint resistance, telemetry, network leaks, and history
+    handling that extensions can't touch.</p>
+
+  <div class="callout info">
+    <strong>What it does that uBlock Origin can't:</strong> disables WebGL
+    fingerprinting, canvas API, AudioContext, font enumeration, window
+    sizing leaks, and Firefox's own telemetry and studies. These are
+    browser-engine features — no extension has the scope to block them.
+  </div>
+
+  <h3>Step 1 — Locate your Firefox profile</h3>
+  <div class="steps">
+    <div class="step">
+      <div class="step-n">01</div>
+      <div class="step-body">Open Firefox and navigate to <code>about:profiles</code><span class="note">Find your active
+          profile — it will say "This is the profile in use"</span></div>
+    </div>
+    <div class="step">
+      <div class="step-n">02</div>
+      <div class="step-body">Click <strong>Open Folder</strong> next to "Root Directory"<span class="note">On macOS:
+          ~/Library/Application Support/Firefox/Profiles/xxxxxxxx.default</span></div>
+    </div>
+    <div class="step">
+      <div class="step-n">03</div>
+      <div class="step-body">Note this path — you'll put arkenfox files here</div>
+    </div>
+  </div>
+
+  <h3>Step 2 — Download arkenfox</h3>
+  <div class="code-block">
+    <div class="code-header">
+      <span class="code-label">terminal</span>
+      <button class="copy-btn" onclick="copyCode(this)">copy</button>
+    </div>
+    <pre><span class="cm"># Navigate to your profile directory</span>
 cd ~/Library/Application\ Support/Firefox/Profiles/YOURPROFILE
 
 <span class="cm"># Download user.js and the updater script</span>
@@ -90,17 +104,18 @@ curl -O https://raw.githubusercontent.com/arkenfox/user.js/master/updater.sh
 
 <span class="cm"># Make updater executable</span>
 chmod +x updater.sh</pre>
-</div>
-
-<h3>Step 3 — Create your overrides file</h3>
-<p>Never edit <code>user.js</code> directly — it gets overwritten on updates. Instead, create <code>user-overrides.js</code> in the same directory with your personal tweaks:</p>
-
-<div class="code-block">
-  <div class="code-header">
-    <span class="code-label">user-overrides.js — tuned for your setup</span>
-    <button class="copy-btn" onclick="copyCode(this)">copy</button>
   </div>
-  <pre><span class="cm">/* ---- Arkenfox overrides — tuned for your threat model ---- */</span>
+
+  <h3>Step 3 — Create your overrides file</h3>
+  <p>Never edit <code>user.js</code> directly — it gets overwritten on updates. Instead, create
+    <code>user-overrides.js</code> in the same directory with your personal tweaks:</p>
+
+  <div class="code-block">
+    <div class="code-header">
+      <span class="code-label">user-overrides.js — tuned for your setup</span>
+      <button class="copy-btn" onclick="copyCode(this)">copy</button>
+    </div>
+    <pre><span class="cm">/* ---- Arkenfox overrides — tuned for your threat model ---- */</span>
 
 <span class="cm">/* Keep search suggestions off (you use SearXNG locally) */</span>
 <span class="ck">user_pref</span>(<span class="cs">"browser.search.suggest.enabled"</span>, <span class="cv">false</span>);
@@ -132,363 +147,395 @@ chmod +x updater.sh</pre>
 <span class="ck">user_pref</span>(<span class="cs">"datareporting.healthreport.uploadEnabled"</span>, <span class="cv">false</span>);
 <span class="ck">user_pref</span>(<span class="cs">"app.shield.optoutstudies.enabled"</span>, <span class="cv">false</span>);
 <span class="ck">user_pref</span>(<span class="cs">"browser.discovery.enabled"</span>, <span class="cv">false</span>);</pre>
-</div>
-
-<h3>Step 4 — Apply and update</h3>
-<div class="steps">
-  <div class="step">
-    <div class="step-n">01</div>
-    <div class="step-body">Run <code>./updater.sh</code> — this merges <code>user.js</code> + <code>user-overrides.js</code><span class="note">Say yes when asked if you want to run the cleaner script</span></div>
   </div>
-  <div class="step">
-    <div class="step-n">02</div>
-    <div class="step-body">Restart Firefox completely</div>
+
+  <h3>Step 4 — Apply and update</h3>
+  <div class="steps">
+    <div class="step">
+      <div class="step-n">01</div>
+      <div class="step-body">Run <code>./updater.sh</code> — this merges <code>user.js</code> +
+        <code>user-overrides.js</code><span class="note">Say yes when asked if you want to run the cleaner script</span>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-n">02</div>
+      <div class="step-body">Restart Firefox completely</div>
+    </div>
+    <div class="step">
+      <div class="step-n">03</div>
+      <div class="step-body">Verify at <code>about:config</code> — search <code>resistFingerprinting</code> — should be
+        <code>true</code></div>
+    </div>
+    <div class="step">
+      <div class="step-n">04</div>
+      <div class="step-body">Run <code>./updater.sh</code> again after every Firefox major update<span class="note">Add
+          a calendar reminder — arkenfox releases align with Firefox ESR cycles</span></div>
+    </div>
   </div>
-  <div class="step">
-    <div class="step-n">03</div>
-    <div class="step-body">Verify at <code>about:config</code> — search <code>resistFingerprinting</code> — should be <code>true</code></div>
+
+  <div class="callout warn">
+    <strong>Sites that will break:</strong> Anything relying on canvas
+    (some CAPTCHAs), WebGL (3D maps, games), and some legacy SSO flows. Use
+    Brave as the fallback for these — don't whitelist them in Firefox.
   </div>
-  <div class="step">
-    <div class="step-n">04</div>
-    <div class="step-body">Run <code>./updater.sh</code> again after every Firefox major update<span class="note">Add a calendar reminder — arkenfox releases align with Firefox ESR cycles</span></div>
+
+  <hr>
+
+  <!-- PART 2 -->
+  <div class="section-label" id="part2">
+    <span class="section-num">02</span>
+    <h2>uBlock Origin in medium mode</h2>
   </div>
-</div>
 
-<div class="callout warn">
-  <strong>Sites that will break:</strong> Anything relying on canvas 
-(some CAPTCHAs), WebGL (3D maps, games), and some legacy SSO flows. Use 
-Brave as the fallback for these — don't whitelist them in Firefox.
-</div>
+  <p>Easy mode blocks cosmetic ads. Medium mode blocks all third-party
+    scripts and frames by default — you whitelist selectively. This is the
+    biggest single tracking reduction available without breaking your
+    browsing model entirely.</p>
 
-<hr>
-
-<!-- PART 2 -->
-<div class="section-label" id="part2">
-  <span class="section-num">02</span>
-  <h2>uBlock Origin in medium mode</h2>
-</div>
-
-<p>Easy mode blocks cosmetic ads. Medium mode blocks all third-party 
-scripts and frames by default — you whitelist selectively. This is the 
-biggest single tracking reduction available without breaking your 
-browsing model entirely.</p>
-
-<div class="callout info">
-  <strong>Expected friction:</strong> ~10–15 sites will break the first 
-time you visit. You'll click the uBlock icon and allow specific domains.
- After a week you'll rarely need to touch it.
-</div>
-
-<h3>Enabling medium mode</h3>
-<div class="steps">
-  <div class="step">
-    <div class="step-n">01</div>
-    <div class="step-body">Open uBlock Origin dashboard → <strong>Filter lists</strong> tab</div>
+  <div class="callout info">
+    <strong>Expected friction:</strong> ~10–15 sites will break the first
+    time you visit. You'll click the uBlock icon and allow specific domains.
+    After a week you'll rarely need to touch it.
   </div>
-  <div class="step">
-    <div class="step-n">02</div>
-    <div class="step-body">Go to <strong>My rules</strong> tab and add these two rules:<span class="note">This is what activates medium mode</span></div>
-  </div>
-</div>
 
-<div class="code-block">
-  <div class="code-header">
-    <span class="code-label">uBlock Origin — My rules</span>
-    <button class="copy-btn" onclick="copyCode(this)">copy</button>
+  <h3>Enabling medium mode</h3>
+  <div class="steps">
+    <div class="step">
+      <div class="step-n">01</div>
+      <div class="step-body">Open uBlock Origin dashboard → <strong>Filter lists</strong> tab</div>
+    </div>
+    <div class="step">
+      <div class="step-n">02</div>
+      <div class="step-body">Go to <strong>My rules</strong> tab and add these two rules:<span class="note">This is what
+          activates medium mode</span></div>
+    </div>
   </div>
-  <pre><span class="cm"># Block all third-party scripts by default</span>
+
+  <div class="code-block">
+    <div class="code-header">
+      <span class="code-label">uBlock Origin — My rules</span>
+      <button class="copy-btn" onclick="copyCode(this)">copy</button>
+    </div>
+    <pre><span class="cm"># Block all third-party scripts by default</span>
 * * 3p-script block
 <span class="cm"># Block all third-party frames by default</span>
 * * 3p-frame block</pre>
-</div>
+  </div>
 
-<h3>Recommended filter lists</h3>
-<table class="ub-table">
-  <thead>
-    <tr>
-      <th>List</th>
-      <th>Purpose</th>
-      <th>Priority</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td><code>uBlock filters</code> (default)</td>
-      <td>Core ad/tracker blocking</td>
-      <td><span class="badge badge-must">must</span></td>
-    </tr>
-    <tr>
-      <td><code>EasyList</code></td>
-      <td>Ad network coverage</td>
-      <td><span class="badge badge-must">must</span></td>
-    </tr>
-    <tr>
-      <td><code>EasyPrivacy</code></td>
-      <td>Tracker network coverage</td>
-      <td><span class="badge badge-must">must</span></td>
-    </tr>
-    <tr>
-      <td><code>uBlock – Annoyances</code></td>
-      <td>Cookie banners, overlays</td>
-      <td><span class="badge badge-rec">recommended</span></td>
-    </tr>
-    <tr>
-      <td><code>Peter Lowe's list</code></td>
-      <td>Ad servers + tracking</td>
-      <td><span class="badge badge-rec">recommended</span></td>
-    </tr>
-    <tr>
-      <td><code>AdGuard Tracking Protection</code></td>
-      <td>Supplements EasyPrivacy</td>
-      <td><span class="badge badge-rec">recommended</span></td>
-    </tr>
-    <tr>
-      <td><code>Privacy Badger</code></td>
-      <td>Redundant — you have uBO</td>
-      <td><span class="badge badge-skip">remove</span></td>
-    </tr>
-  </tbody>
-</table>
+  <h3>Recommended filter lists</h3>
+  <table class="ub-table">
+    <thead>
+      <tr>
+        <th>List</th>
+        <th>Purpose</th>
+        <th>Priority</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>uBlock filters</code> (default)</td>
+        <td>Core ad/tracker blocking</td>
+        <td><span class="badge badge-must">must</span></td>
+      </tr>
+      <tr>
+        <td><code>EasyList</code></td>
+        <td>Ad network coverage</td>
+        <td><span class="badge badge-must">must</span></td>
+      </tr>
+      <tr>
+        <td><code>EasyPrivacy</code></td>
+        <td>Tracker network coverage</td>
+        <td><span class="badge badge-must">must</span></td>
+      </tr>
+      <tr>
+        <td><code>uBlock – Annoyances</code></td>
+        <td>Cookie banners, overlays</td>
+        <td><span class="badge badge-rec">recommended</span></td>
+      </tr>
+      <tr>
+        <td><code>Peter Lowe's list</code></td>
+        <td>Ad servers + tracking</td>
+        <td><span class="badge badge-rec">recommended</span></td>
+      </tr>
+      <tr>
+        <td><code>AdGuard Tracking Protection</code></td>
+        <td>Supplements EasyPrivacy</td>
+        <td><span class="badge badge-rec">recommended</span></td>
+      </tr>
+      <tr>
+        <td><code>Privacy Badger</code></td>
+        <td>Redundant — you have uBO</td>
+        <td><span class="badge badge-skip">remove</span></td>
+      </tr>
+    </tbody>
+  </table>
 
-<hr>
+  <hr>
 
-<!-- PART 3 -->
-<div class="section-label" id="part3">
-  <span class="section-num">03</span>
-  <h2>Firefox container structure</h2>
-</div>
+  <!-- PART 3 -->
+  <div class="section-label" id="part3">
+    <span class="section-num">03</span>
+    <h2>Firefox container structure</h2>
+  </div>
 
-<p>The goal is identity isolation — each container has a separate cookie
- jar, session store, and indexedDB. Sites in different containers cannot
- correlate your activity even if they share trackers. Install <strong>Firefox Multi-Account Containers</strong> + <strong>Container Tabs</strong> extensions, then build this structure:</p>
+  <p>The goal is identity isolation — each container has a separate cookie
+    jar, session store, and indexedDB. Sites in different containers cannot
+    correlate your activity even if they share trackers. Install <strong>Firefox Multi-Account Containers</strong> +
+    <strong>Container Tabs</strong> extensions, then build this structure:</p>
 
-<div class="container-grid">
+  <div class="container-grid">
 
-  <div class="container-card c-blue">
-    <div class="container-name">PERSONAL</div>
-    <div class="container-desc">Proton Mail, Proton Pass, personal services tied to your real identity</div>
-    <div class="container-sites">
-      <span class="site-tag">proton.me</span>
-      <span class="site-tag">protonmail.com</span>
-      <span class="site-tag">protonvpn.com</span>
-      <span class="site-tag">your custom domain</span>
+    <div class="container-card c-blue">
+      <div class="container-name">PERSONAL</div>
+      <div class="container-desc">Proton Mail, Proton Pass, personal services tied to your real identity</div>
+      <div class="container-sites">
+        <span class="site-tag">proton.me</span>
+        <span class="site-tag">protonmail.com</span>
+        <span class="site-tag">protonvpn.com</span>
+        <span class="site-tag">your custom domain</span>
+      </div>
+      <div class="container-rule">→ Never open social or shopping here</div>
     </div>
-    <div class="container-rule">→ Never open social or shopping here</div>
-  </div>
 
-  <div class="container-card c-red">
-    <div class="container-name">SOCIAL</div>
-    <div class="container-desc">All social platforms — fully isolated from everything else. Assume everything here is surveilled.</div>
-    <div class="container-sites">
-      <span class="site-tag">twitter.com</span>
-      <span class="site-tag">instagram.com</span>
-      <span class="site-tag">facebook.com</span>
-      <span class="site-tag">linkedin.com</span>
+    <div class="container-card c-red">
+      <div class="container-name">SOCIAL</div>
+      <div class="container-desc">All social platforms — fully isolated from everything else. Assume everything here is
+        surveilled.</div>
+      <div class="container-sites">
+        <span class="site-tag">twitter.com</span>
+        <span class="site-tag">instagram.com</span>
+        <span class="site-tag">facebook.com</span>
+        <span class="site-tag">linkedin.com</span>
+      </div>
+      <div class="container-rule">→ No real browsing, no logins to other services</div>
     </div>
-    <div class="container-rule">→ No real browsing, no logins to other services</div>
-  </div>
 
-  <div class="container-card c-purple">
-    <div class="container-name">RESEARCH</div>
-    <div class="container-desc">Sensitive browsing, activism, digital rights work. No persistent logins. Clear on close.</div>
-    <div class="container-sites">
-      <span class="site-tag">no logins</span>
-      <span class="site-tag">SearXNG</span>
-      <span class="site-tag">archive.org</span>
-      <span class="site-tag">tor-adjacent</span>
+    <div class="container-card c-purple">
+      <div class="container-name">RESEARCH</div>
+      <div class="container-desc">Sensitive browsing, activism, digital rights work. No persistent logins. Clear on
+        close.</div>
+      <div class="container-sites">
+        <span class="site-tag">no logins</span>
+        <span class="site-tag">SearXNG</span>
+        <span class="site-tag">archive.org</span>
+        <span class="site-tag">tor-adjacent</span>
+      </div>
+      <div class="container-rule">→ For high-sensitivity: use Tor Browser instead</div>
     </div>
-    <div class="container-rule">→ For high-sensitivity: use Tor Browser instead</div>
-  </div>
 
-  <div class="container-card c-amber">
-    <div class="container-name">SHOPPING</div>
-    <div class="container-desc">E-commerce, delivery, price tracking. Isolated so purchase history can't be correlated with browsing.</div>
-    <div class="container-sites">
-      <span class="site-tag">amazon</span>
-      <span class="site-tag">e-commerce</span>
-      <span class="site-tag">delivery apps</span>
+    <div class="container-card c-amber">
+      <div class="container-name">SHOPPING</div>
+      <div class="container-desc">E-commerce, delivery, price tracking. Isolated so purchase history can't be correlated
+        with browsing.</div>
+      <div class="container-sites">
+        <span class="site-tag">amazon</span>
+        <span class="site-tag">e-commerce</span>
+        <span class="site-tag">delivery apps</span>
+      </div>
+      <div class="container-rule">→ Use alias email addresses here</div>
     </div>
-    <div class="container-rule">→ Use alias email addresses here</div>
-  </div>
 
-  <div class="container-card c-green">
-    <div class="container-name">WORK / DEV</div>
-    <div class="container-desc">Development tools, GitHub, professional services, documentation. Clean separation from personal.</div>
-    <div class="container-sites">
-      <span class="site-tag">github.com</span>
-      <span class="site-tag">dev tools</span>
-      <span class="site-tag">docs</span>
-      <span class="site-tag">CI/CD</span>
+    <div class="container-card c-green">
+      <div class="container-name">WORK / DEV</div>
+      <div class="container-desc">Development tools, GitHub, professional services, documentation. Clean separation from
+        personal.</div>
+      <div class="container-sites">
+        <span class="site-tag">github.com</span>
+        <span class="site-tag">dev tools</span>
+        <span class="site-tag">docs</span>
+        <span class="site-tag">CI/CD</span>
+      </div>
+      <div class="container-rule">→ Work identity stays here only</div>
     </div>
-    <div class="container-rule">→ Work identity stays here only</div>
-  </div>
 
-  <div class="container-card c-teal">
-    <div class="container-name">FINANCE</div>
-    <div class="container-desc">Banking, investments, crypto. Completely isolated — never mix with shopping or social.</div>
-    <div class="container-sites">
-      <span class="site-tag">banking</span>
-      <span class="site-tag">brokerage</span>
-      <span class="site-tag">crypto</span>
-      <span class="site-tag">tax</span>
+    <div class="container-card c-teal">
+      <div class="container-name">FINANCE</div>
+      <div class="container-desc">Banking, investments, crypto. Completely isolated — never mix with shopping or social.
+      </div>
+      <div class="container-sites">
+        <span class="site-tag">banking</span>
+        <span class="site-tag">brokerage</span>
+        <span class="site-tag">crypto</span>
+        <span class="site-tag">tax</span>
+      </div>
+      <div class="container-rule">→ Never open unsolicited links here</div>
     </div>
-    <div class="container-rule">→ Never open unsolicited links here</div>
-  </div>
 
-  <div class="container-card c-gray">
-    <div class="container-name">THROWAWAY</div>
-    <div class="container-desc">One-off logins, link previews, untrusted sites, anything you don't want touching other containers.</div>
-    <div class="container-sites">
-      <span class="site-tag">temp signups</span>
-      <span class="site-tag">unknown links</span>
-      <span class="site-tag">trials</span>
+    <div class="container-card c-gray">
+      <div class="container-name">THROWAWAY</div>
+      <div class="container-desc">One-off logins, link previews, untrusted sites, anything you don't want touching other
+        containers.</div>
+      <div class="container-sites">
+        <span class="site-tag">temp signups</span>
+        <span class="site-tag">unknown links</span>
+        <span class="site-tag">trials</span>
+      </div>
+      <div class="container-rule">→ Clear cookies after every session</div>
     </div>
-    <div class="container-rule">→ Clear cookies after every session</div>
-  </div>
 
-  <div class="container-card c-pink">
-    <div class="container-name">MEDIA</div>
-    <div class="container-desc">Streaming services — isolated so viewing habits can't be correlated with identity or research containers.</div>
-    <div class="container-sites">
-      <span class="site-tag">netflix</span>
-      <span class="site-tag">youtube</span>
-      <span class="site-tag">spotify</span>
-      <span class="site-tag">streaming</span>
+    <div class="container-card c-pink">
+      <div class="container-name">MEDIA</div>
+      <div class="container-desc">Streaming services — isolated so viewing habits can't be correlated with identity or
+        research containers.</div>
+      <div class="container-sites">
+        <span class="site-tag">netflix</span>
+        <span class="site-tag">youtube</span>
+        <span class="site-tag">spotify</span>
+        <span class="site-tag">streaming</span>
+      </div>
+      <div class="container-rule">→ Never open links from here in other containers</div>
     </div>
-    <div class="container-rule">→ Never open links from here in other containers</div>
+
   </div>
 
-</div>
+  <div class="callout good">
+    <strong>Automation tip:</strong> Use the "Always open in this
+    container" feature — right-click any container → Manage → assign
+    domains. After setup, proton.me always opens in PERSONAL, twitter.com
+    always in SOCIAL. Zero manual switching.
+  </div>
 
-<div class="callout good">
-  <strong>Automation tip:</strong> Use the "Always open in this 
-container" feature — right-click any container → Manage → assign 
-domains. After setup, proton.me always opens in PERSONAL, twitter.com 
-always in SOCIAL. Zero manual switching.
-</div>
+  <div class="callout info">
+    <strong>The single most effective habit:</strong> Never open an
+    unfamiliar link directly in your current container. Right-click → Open
+    in Container → Throwaway for any link you didn't explicitly navigate to
+    yourself. This one habit closes more correlation vectors than most
+    technical controls — a tracker embedded in a link can tie your RESEARCH
+    identity to your PERSONAL one if you open it in the wrong container.
+  </div>
 
-<div class="callout info">
-  <strong>The single most effective habit:</strong> Never open an 
-unfamiliar link directly in your current container. Right-click → Open 
-in Container → Throwaway for any link you didn't explicitly navigate to 
-yourself. This one habit closes more correlation vectors than most 
-technical controls — a tracker embedded in a link can tie your RESEARCH 
-identity to your PERSONAL one if you open it in the wrong container.
-</div>
+  <div class="callout warn">
+    <strong>High-sensitivity research:</strong> The RESEARCH container
+    reduces correlation but doesn't anonymise you at the network level. Your
+    WireGuard tunnel helps, but for genuinely sensitive work (activism,
+    digital rights) use Tor Browser as a separate application — not a
+    container, not Brave, not a VPN-over-Firefox setup.
+  </div>
 
-<div class="callout warn">
-  <strong>High-sensitivity research:</strong> The RESEARCH container 
-reduces correlation but doesn't anonymise you at the network level. Your
- WireGuard tunnel helps, but for genuinely sensitive work (activism, 
-digital rights) use Tor Browser as a separate application — not a 
-container, not Brave, not a VPN-over-Firefox setup.
-</div>
+  <hr>
 
-<hr>
+  <!-- PART 4 -->
+  <div class="section-label" id="part4">
+    <span class="section-num">04</span>
+    <h2>Brave cleanup</h2>
+  </div>
 
-<!-- PART 4 -->
-<div class="section-label" id="part4">
-  <span class="section-num">04</span>
-  <h2>Brave cleanup</h2>
-</div>
+  <p>Keep Brave as your fallback for sites that break under hardened Firefox. But strip the features that reintroduce
+    telemetry:</p>
 
-<p>Keep Brave as your fallback for sites that break under hardened Firefox. But strip the features that reintroduce telemetry:</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-n">01</div>
+      <div class="step-body">Disable <strong>Brave Rewards</strong> — Settings → Brave Rewards → toggle off<span
+          class="note">The BAT/ad replacement system phones home to Brave's ad servers</span></div>
+    </div>
+    <div class="step">
+      <div class="step-n">02</div>
+      <div class="step-body">Disable <strong>Brave News</strong> — New Tab → hide feed<span class="note">Fetches content
+          from Brave's CDN, tied to your install ID</span></div>
+    </div>
+    <div class="step">
+      <div class="step-n">03</div>
+      <div class="step-body">Disable <strong>Brave Wallet</strong> — Settings → Web3 → Default wallet → None<span
+          class="note">Unless you actively use it — otherwise it's unnecessary attack surface</span></div>
+    </div>
+    <div class="step">
+      <div class="step-n">04</div>
+      <div class="step-body">Set Shields to <strong>Aggressive</strong> — brave://settings/shields<span
+          class="note">Brave's fingerprint resistance is genuinely good — let it do its job</span></div>
+    </div>
+    <div class="step">
+      <div class="step-n">05</div>
+      <div class="step-body">Search engine → set to your <strong>local SearXNG</strong> instance<span
+          class="note">brave://settings/search → add custom search engine with your Pi's SearXNG URL</span></div>
+    </div>
+  </div>
 
-<div class="steps">
-  <div class="step">
-    <div class="step-n">01</div>
-    <div class="step-body">Disable <strong>Brave Rewards</strong> — Settings → Brave Rewards → toggle off<span class="note">The BAT/ad replacement system phones home to Brave's ad servers</span></div>
-  </div>
-  <div class="step">
-    <div class="step-n">02</div>
-    <div class="step-body">Disable <strong>Brave News</strong> — New Tab → hide feed<span class="note">Fetches content from Brave's CDN, tied to your install ID</span></div>
-  </div>
-  <div class="step">
-    <div class="step-n">03</div>
-    <div class="step-body">Disable <strong>Brave Wallet</strong> — Settings → Web3 → Default wallet → None<span class="note">Unless you actively use it — otherwise it's unnecessary attack surface</span></div>
-  </div>
-  <div class="step">
-    <div class="step-n">04</div>
-    <div class="step-body">Set Shields to <strong>Aggressive</strong> — brave://settings/shields<span class="note">Brave's fingerprint resistance is genuinely good — let it do its job</span></div>
-  </div>
-  <div class="step">
-    <div class="step-n">05</div>
-    <div class="step-body">Search engine → set to your <strong>local SearXNG</strong> instance<span class="note">brave://settings/search → add custom search engine with your Pi's SearXNG URL</span></div>
-  </div>
-</div>
+  <hr>
 
-<hr>
+  <!-- PART 5 -->
+  <div class="section-label" id="part5">
+    <span class="section-num">05</span>
+    <h2>Final checklist</h2>
+  </div>
 
-<!-- PART 5 -->
-<div class="section-label" id="part5">
-  <span class="section-num">05</span>
-  <h2>Final checklist</h2>
-</div>
+  <div class="steps">
+    <div class="step">
+      <input type="checkbox" class="step-check">
+      <div class="step-body">Arkenfox <code>user.js</code> installed and <code>user-overrides.js</code> applied</div>
+    </div>
+    <div class="step">
+      <input type="checkbox" class="step-check">
+      <div class="step-body">uBlock Origin in medium mode with recommended filter lists</div>
+    </div>
+    <div class="step">
+      <input type="checkbox" class="step-check">
+      <div class="step-body">Privacy Badger removed</div>
+    </div>
+    <div class="step">
+      <input type="checkbox" class="step-check">
+      <div class="step-body">8 containers created with domain assignments automated (Personal, Social, Research,
+        Shopping, Work/Dev, Finance, Throwaway, Media)</div>
+    </div>
+    <div class="step">
+      <input type="checkbox" class="step-check">
+      <div class="step-body">Habit set: unfamiliar links always opened in Throwaway container via right-click → Open in
+        Container</div>
+    </div>
+    <div class="step">
+      <input type="checkbox" class="step-check">
+      <div class="step-body">Firefox Sync disabled or using throwaway Mozilla account</div>
+    </div>
+    <div class="step">
+      <input type="checkbox" class="step-check">
+      <div class="step-body">SearXNG set as default search in both Firefox and Brave</div>
+    </div>
+    <div class="step">
+      <input type="checkbox" class="step-check">
+      <div class="step-body">Brave: Rewards, News, Wallet disabled — Shields on Aggressive</div>
+    </div>
+    <div class="step">
+      <input type="checkbox" class="step-check">
+      <div class="step-body">Tor Browser installed separately for high-sensitivity research</div>
+    </div>
+    <div class="step">
+      <input type="checkbox" class="step-check">
+      <div class="step-body">WebRTC disabled via <code>user-overrides.js</code> — verify at
+        <code>browserleaks.com/webrtc</code></div>
+    </div>
+    <div class="step">
+      <input type="checkbox" class="step-check">
+      <div class="step-body">Fingerprint test at <code>coveryourtracks.eff.org</code> — should show "strong protection"
+      </div>
+    </div>
+    <div class="step">
+      <input type="checkbox" class="step-check">
+      <div class="step-body">Run arkenfox <code>updater.sh</code> after every Firefox major version update — add a
+        calendar reminder</div>
+    </div>
+  </div>
 
-<div class="steps">
-  <div class="step">
-    <input type="checkbox" class="step-check">
-    <div class="step-body">Arkenfox <code>user.js</code> installed and <code>user-overrides.js</code> applied</div>
+  <div class="footer">
+    <div class="footer-brand">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+        stroke-linecap="round" aria-label="Copyleft">
+        <circle cx="12" cy="12" r="10" />
+        <path d="M8.5 8.5A5 5 0 1 1 8.5 15.5" />
+      </svg> kasunben &middot; <span class="footer-date">created at <span id="date-created"
+          data-created="2026-05-25"></span></span> &middot; <span class="footer-date">last-updated at <span
+          id="last-updated"></span></span>
+    </div>
+    <div class="footer-tags">
+      <span>#digital-sovereignty</span>
+      <span>#firefox</span>
+      <span>#privacy</span>
+    </div>
   </div>
-  <div class="step">
-    <input type="checkbox" class="step-check">
-    <div class="step-body">uBlock Origin in medium mode with recommended filter lists</div>
-  </div>
-  <div class="step">
-    <input type="checkbox" class="step-check">
-    <div class="step-body">Privacy Badger removed</div>
-  </div>
-  <div class="step">
-    <input type="checkbox" class="step-check">
-    <div class="step-body">8 containers created with domain assignments automated (Personal, Social, Research, Shopping, Work/Dev, Finance, Throwaway, Media)</div>
-  </div>
-  <div class="step">
-    <input type="checkbox" class="step-check">
-    <div class="step-body">Habit set: unfamiliar links always opened in Throwaway container via right-click → Open in Container</div>
-  </div>
-  <div class="step">
-    <input type="checkbox" class="step-check">
-    <div class="step-body">Firefox Sync disabled or using throwaway Mozilla account</div>
-  </div>
-  <div class="step">
-    <input type="checkbox" class="step-check">
-    <div class="step-body">SearXNG set as default search in both Firefox and Brave</div>
-  </div>
-  <div class="step">
-    <input type="checkbox" class="step-check">
-    <div class="step-body">Brave: Rewards, News, Wallet disabled — Shields on Aggressive</div>
-  </div>
-  <div class="step">
-    <input type="checkbox" class="step-check">
-    <div class="step-body">Tor Browser installed separately for high-sensitivity research</div>
-  </div>
-  <div class="step">
-    <input type="checkbox" class="step-check">
-    <div class="step-body">WebRTC disabled via <code>user-overrides.js</code> — verify at <code>browserleaks.com/webrtc</code></div>
-  </div>
-  <div class="step">
-    <input type="checkbox" class="step-check">
-    <div class="step-body">Fingerprint test at <code>coveryourtracks.eff.org</code> — should show "strong protection"</div>
-  </div>
-  <div class="step">
-    <input type="checkbox" class="step-check">
-    <div class="step-body">Run arkenfox <code>updater.sh</code> after every Firefox major version update — add a calendar reminder</div>
-  </div>
-</div>
 
-<div class="footer">
-  <div class="footer-brand">
-    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-label="Copyleft"><circle cx="12" cy="12" r="10"/><path d="M8.5 8.5A5 5 0 1 1 8.5 15.5"/></svg> kasunben &middot; <span class="footer-date">created at <span id="date-created" data-created="2026-05-25"></span></span> &middot; <span class="footer-date">last-updated at <span id="last-updated"></span></span>
-  </div>
-  <div class="footer-tags">
-    <span>#digital-sovereignty</span>
-    <span>#firefox</span>
-    <span>#privacy</span>
-  </div>
-</div>
-
-<script src="../../js/utils.js"></script>
+  <script src="../../js/utils.js"></script>
 
 
 
-</body></html>
+</body>
+
+</html>
