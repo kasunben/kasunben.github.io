@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Pragmatic Guide to DeGoogle :: Digital Sovereignty — Field Notes</title>
+
+<meta name="description" content="How to reclaim your digital life without losing your mind — or your productivity. A pragmatic, step-by-step guide to moving away from big tech.">
+<meta name="author" content="kasunben">
+<link rel="canonical" href="https://kasunben.openfs.io/docs/digital-sovereignty/a-pragmatic-guide-to-degoogle.html">
+
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://kasunben.openfs.io/docs/digital-sovereignty/a-pragmatic-guide-to-degoogle.html">
+<meta property="og:title" content="A Pragmatic Guide to DeGoogle :: Digital Sovereignty — Field Notes">
+<meta property="og:description" content="How to reclaim your digital life without losing your mind — or your productivity.">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="A Pragmatic Guide to DeGoogle :: Digital Sovereignty — Field Notes">
+<meta name="twitter:description" content="How to reclaim your digital life without losing your mind — or your productivity.">
+
+<link rel="stylesheet" href="../../css/theme.css">
+</head>
+<body>
+
+<div class="header">
+  <div class="header-eyebrow">
+    <a href="/"><svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-label="Home"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg></a>
+    · Docs · Digital Sovereignty
+  </div>
+  <h1>A Pragmatic Guide to <span>DeGoogle</span></h1>
+  <p class="header-sub">How to reclaim your digital life without losing your mind — or your productivity.</p>
+</div>
+
+<div class="toc">
+  <div class="toc-title">Contents</div>
+  <ul class="toc-list">
+    <li><a href="#why">What "DeGoogling" actually means</a></li>
+    <li><a href="#problem">Why bother? Understanding the actual problem</a></li>
+    <li><a href="#framework">The pragmatic framework</a></li>
+    <li><a href="#phase1">Phase 1 — Email and domain</a></li>
+    <li><a href="#phase2">Phase 2 — Passwords and credentials</a></li>
+    <li><a href="#phase3">Phase 3 — Cloud storage and documents</a></li>
+    <li><a href="#phase4">Phase 4 — Browser and search</a></li>
+    <li><a href="#phase5">Phase 5 — VPN and network</a></li>
+    <li><a href="#phase6">Phase 6 — Messaging and social media</a></li>
+    <li><a href="#phase7">Phase 7 — Local AI and the home server</a></li>
+    <li><a href="#sequence">Migration sequence</a></li>
+    <li><a href="#caveats">Honest caveats</a></li>
+    <li><a href="#reference">Reference: key tools</a></li>
+  </ul>
+</div>
+
+<!-- WHY -->
+<div class="section-label" id="why">
+  <span class="section-num">00</span>
+  <h2>What "DeGoogling" actually means</h2>
+</div>
+
+<p>Let's be clear about something upfront: this guide is not about Google.</p>
+<p>Not exclusively, anyway. "DeGoogling" has become shorthand for a broader project — moving away from the surveillance economy, reclaiming ownership of your data, and reducing your dependence on centralized platforms that treat your behavior as their product. Google is the most visible example, but the same logic applies to Meta, Apple, Microsoft, and most of the dominant SaaS ecosystem.</p>
+<p>This is also not a guide for extremists. There is a vocal faction in the privacy community that will tell you to run your own mail server, compile your operating system from source, and communicate exclusively through encrypted mesh networks. That advice is mostly useless for people who have jobs, families, and finite time. If that is the standard, most people will correctly decide it is not worth it and change nothing.</p>
+
+<div class="callout good">
+  <strong>The goal is pragmatism.</strong> You can meaningfully improve your privacy, reduce your exposure, and own more of your digital life without sacrificing the productivity and convenience you depend on. The transition takes time and some tolerance for rough edges — but it is achievable.
+</div>
+
+<!-- PROBLEM -->
+<div class="section-label" id="problem">
+  <span class="section-num">01</span>
+  <h2>Why bother? Understanding the actual problem</h2>
+</div>
+
+<p>The business model of most "free" digital services is data extraction. Your emails, search queries, calendar events, location history, and browsing patterns are harvested, aggregated, sold to data brokers, used to build behavioral profiles, and fed into advertising and influence systems. You are not the customer. You are the product.</p>
+
+<p>The harm is not always obvious or immediate. But the cumulative effects are significant:</p>
+
+<ul>
+  <li><strong>Surveillance infrastructure</strong> built for advertising can be repurposed — by governments, by bad actors who breach platforms, or by the platforms themselves under changing ownership.</li>
+  <li><strong>Data broker ecosystems</strong> mean information collected by one service ends up aggregated with dozens of others, creating profiles far more detailed than any single platform holds.</li>
+  <li><strong>Behavioral manipulation</strong> — recommendations, feeds, notifications — is engineered to maximize engagement, not your wellbeing.</li>
+  <li><strong>Lock-in</strong> means switching costs rise over time, concentrating power with a small number of platforms.</li>
+</ul>
+
+<div class="callout warn">
+  For people doing digital rights work, journalism, activism, or sensitive communications, the stakes are higher and more concrete. But even for ordinary users, the direction of travel is bad and the costs of doing nothing compound over time.
+</div>
+
+<!-- FRAMEWORK -->
+<div class="section-label" id="framework">
+  <span class="section-num">02</span>
+  <h2>The pragmatic framework</h2>
+</div>
+
+<p>Before touching a single service, accept the following:</p>
+
+<div class="steps">
+  <div class="step">
+    <div class="step-n">01</div>
+    <div class="step-body"><strong>You will not escape everything.</strong> Some dependencies are too deeply embedded in infrastructure to practically avoid. The goal is not purity — it is meaningful reduction in your exposure surface.<span class="note">This is not a failure condition. It is the correct framing.</span></div>
+  </div>
+  <div class="step">
+    <div class="step-n">02</div>
+    <div class="step-body"><strong>You will make tradeoffs.</strong> Privacy-respecting alternatives are often less polished or require more active maintenance. Deciding which tradeoffs are acceptable depends on your threat model and how you work.</div>
+  </div>
+  <div class="step">
+    <div class="step-n">03</div>
+    <div class="step-body"><strong>Start with your identity layer.</strong> Everything flows from your email address and identity. Get that right first, and the rest becomes much more tractable.</div>
+  </div>
+  <div class="step">
+    <div class="step-n">04</div>
+    <div class="step-body"><strong>Move gradually.</strong> Trying to migrate everything at once is a reliable way to fail. Pick the highest-value changes and work one category at a time.</div>
+  </div>
+  <div class="step">
+    <div class="step-n">05</div>
+    <div class="step-body"><strong>Do not let perfect be the enemy of good.</strong> Using Proton instead of Gmail is a genuine improvement, even if Proton is not self-hosted. Using Signal instead of WhatsApp is a genuine improvement, even if some contacts still use WhatsApp.</div>
+  </div>
+</div>
+
+<hr>
+
+<!-- PHASE 1 -->
+<div class="section-label" id="phase1">
+  <span class="section-num">03</span>
+  <h2>Phase 1 — Email and domain</h2>
+</div>
+
+<h3>The problem with Gmail</h3>
+<p>Your Gmail address is not just a communication channel. It is your identity across the internet. Every service you have ever registered with that address is linked to a Google-controlled namespace. Google can read your emails, cross-references them with your search history and location data, and the address itself belongs to them, not you.</p>
+
+<h3>The solution: own your identity at the domain level</h3>
+<p>The single most important infrastructure investment you can make is buying a personal domain. It costs roughly 10–15 EUR per year. What it buys you is portability: your email address becomes <code>you@yourdomain.com</code>, which you control regardless of which provider handles delivery.</p>
+
+<div class="callout info">
+  <strong>The key insight:</strong> if you decide to move from Proton to Fastmail to a self-hosted server in five years, your email address stays the same. Your contacts do not change. Your identity is yours. The domain is the stable layer — not the provider.
+</div>
+
+<div class="steps">
+  <div class="step">
+    <div class="step-n">01</div>
+    <div class="step-body">Register a domain through a privacy-forward registrar with WHOIS privacy enabled<span class="note">Namecheap with WHOIS Privacy or Njalla are reasonable choices.</span></div>
+  </div>
+  <div class="step">
+    <div class="step-n">02</div>
+    <div class="step-body">Sign up for <a href="https://proton.me" target="_blank" rel="noopener">Proton Mail</a> on a paid plan — required for custom domain support<span class="note">Swiss law, end-to-end encrypted, open source clients. The pragmatic choice given the alternative is running your own mail server.</span></div>
+  </div>
+  <div class="step">
+    <div class="step-n">03</div>
+    <div class="step-body">Point your domain's MX records at Proton via the Proton admin panel<span class="note">Takes 10–30 minutes to propagate. Your domain email is now live.</span></div>
+  </div>
+  <div class="step">
+    <div class="step-n">04</div>
+    <div class="step-body">Create at least two addresses: one for day-to-day use, one for sensitive/financial/professional use<span class="note">Separation of concerns. A data breach at a shopping site shouldn't touch the same address as your bank.</span></div>
+  </div>
+  <div class="step">
+    <div class="step-n">05</div>
+    <div class="step-body">Use Proton's <strong>Easy Switch</strong> tool to import historical emails from Gmail<span class="note">For anything sensitive, download manually via Google Takeout and archive locally.</span></div>
+  </div>
+  <div class="step">
+    <div class="step-n">06</div>
+    <div class="step-body">Set forwarding rules in your old Gmail so important contacts route to your new address while you migrate services<span class="note">Treat the old Gmail as a legacy drain, not a primary inbox.</span></div>
+  </div>
+  <div class="step">
+    <div class="step-n">07</div>
+    <div class="step-body">Notify contacts — a short email explaining the change is enough. Most people will update naturally once they reply.</div>
+  </div>
+</div>
+
+<h3>Email aliases</h3>
+<p>Once you have a domain, use email aliases for every service registration. Tools like <a href="https://proton.me/pass" target="_blank" rel="noopener">Proton Pass</a> or <a href="https://simplelogin.io" target="_blank" rel="noopener">SimpleLogin</a> generate disposable addresses like <code>random-alias@yourdomain.com</code> that forward to your real inbox.</p>
+
+<div class="callout good">
+  <strong>Why aliases matter:</strong> you can trace exactly which service sold your address when spam arrives. You can disable a single alias without touching your primary email. And your real address is never exposed to third parties you do not fully trust.
+</div>
+
+<hr>
+
+<!-- PHASE 2 -->
+<div class="section-label" id="phase2">
+  <span class="section-num">04</span>
+  <h2>Phase 2 — Passwords and credentials</h2>
+</div>
+
+<p>Reusing passwords is the most common vector for account compromise. A password manager generates and stores unique, complex passwords for every service. If one service is breached, no other account is at risk.</p>
+
+<div class="callout warn">
+  <strong>The cloud vault problem:</strong> most popular managers (1Password, LastPass) store your encrypted vault on their servers. You must trust them with the encrypted form of your most sensitive credentials. LastPass's 2022 breach demonstrated the consequences when that trust is misplaced.
+</div>
+
+<h3>A layered approach by sensitivity</h3>
+<p>Rather than choosing one tool, split credentials by sensitivity level:</p>
+
+<table class="ub-table">
+  <thead>
+    <tr>
+      <th>Tier</th>
+      <th>Tool</th>
+      <th>Use for</th>
+      <th>Storage</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="badge badge-rec">standard</span></td>
+      <td><a href="https://proton.me/pass" target="_blank" rel="noopener">Proton Pass</a></td>
+      <td>Most services, alias generation, day-to-day</td>
+      <td>Proton-encrypted cloud</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-must">sensitive</span></td>
+      <td><a href="https://keepassxc.org" target="_blank" rel="noopener">KeePassXC</a></td>
+      <td>Financial, email, SSH keys, seed phrases</td>
+      <td>Local encrypted file, you control sync</td>
+    </tr>
+    <tr>
+      <td><span class="badge badge-skip">avoid</span></td>
+      <td>LastPass, browser keychain</td>
+      <td>—</td>
+      <td>Third-party cloud, opaque encryption</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="callout info">
+  <strong>KeePassXC + Proton Drive:</strong> store your KeePass database file on Proton Drive. It is encrypted before it leaves your machine — Proton never holds the plaintext. On iOS, <a href="https://keepassium.com" target="_blank" rel="noopener">KeePassium</a> opens the file directly from your cloud storage provider.
+</div>
+
+<hr>
+
+<!-- PHASE 3 -->
+<div class="section-label" id="phase3">
+  <span class="section-num">05</span>
+  <h2>Phase 3 — Cloud storage and documents</h2>
+</div>
+
+<h3>The Google Docs problem</h3>
+<p>Google Docs and Sheets are genuinely excellent products. Moving away from them is probably the hardest practical concession in this entire guide. The collaboration features, the spreadsheet functionality, the ubiquity — nothing else matches them without friction.</p>
+
+<div class="callout warn">
+  <strong>Honest take:</strong> if Google Sheets is deeply embedded in your workflow, keeping a legacy Google account for that purpose while moving everything else is a defensible compromise. You are making a targeted tradeoff, not abandoning the project.
+</div>
+
+<h3>Storage alternatives</h3>
+
+<table class="ub-table">
+  <thead>
+    <tr>
+      <th>Tool</th>
+      <th>Type</th>
+      <th>Best for</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://proton.me/drive" target="_blank" rel="noopener">Proton Drive</a></td>
+      <td>Managed cloud</td>
+      <td>Files, sharing, quick setup — pragmatic default</td>
+    </tr>
+    <tr>
+      <td><a href="https://nextcloud.com" target="_blank" rel="noopener">Nextcloud</a></td>
+      <td>Self-hosted</td>
+      <td>Full control — files, calendar, contacts, docs via Collabora</td>
+    </tr>
+    <tr>
+      <td><a href="https://immich.app" target="_blank" rel="noopener">Immich</a></td>
+      <td>Self-hosted</td>
+      <td>Photo library — Google Photos replacement, mobile app included</td>
+    </tr>
+    <tr>
+      <td><a href="https://standardnotes.com" target="_blank" rel="noopener">Standard Notes</a></td>
+      <td>Managed / self-hosted</td>
+      <td>Encrypted notes — Google Keep replacement</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Migration from Google</h3>
+<div class="steps">
+  <div class="step">
+    <div class="step-n">01</div>
+    <div class="step-body">Download everything via <a href="https://takeout.google.com" target="_blank" rel="noopener">Google Takeout</a> — Drive, Photos, Keep, Calendar, Contacts<span class="note">Request an export, wait for the email, download the archives. Do not skip this step.</span></div>
+  </div>
+  <div class="step">
+    <div class="step-n">02</div>
+    <div class="step-body">Use the migration as an opportunity to delete — not everything needs to follow you<span class="note">Years of accumulated noise is a good time for a clean break.</span></div>
+  </div>
+  <div class="step">
+    <div class="step-n">03</div>
+    <div class="step-body">Upload files to Proton Drive or Nextcloud depending on your setup</div>
+  </div>
+  <div class="step">
+    <div class="step-n">04</div>
+    <div class="step-body">Import <code>.ics</code> calendar exports into Proton Calendar<span class="note">Google Calendar → Settings → Export. Proton Calendar → Import.</span></div>
+  </div>
+  <div class="step">
+    <div class="step-n">05</div>
+    <div class="step-body">Import <code>.vcf</code> contacts export into Proton Contacts</div>
+  </div>
+</div>
+
+<hr>
+
+<!-- PHASE 4 -->
+<div class="section-label" id="phase4">
+  <span class="section-num">06</span>
+  <h2>Phase 4 — Browser and search</h2>
+</div>
+
+<h3>Browser</h3>
+<p>Uninstall Chrome. It is, functionally, a telemetry and advertising platform that also renders web pages.</p>
+
+<table class="ub-table">
+  <thead>
+    <tr>
+      <th>Browser</th>
+      <th>Role</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://www.mozilla.org/firefox/" target="_blank" rel="noopener">Firefox</a></td>
+      <td><span class="badge badge-must">primary</span></td>
+      <td>Open source, Mozilla Foundation, extensible. Pair with uBlock Origin + Multi-Account Containers.</td>
+    </tr>
+    <tr>
+      <td><a href="https://brave.com" target="_blank" rel="noopener">Brave</a></td>
+      <td><span class="badge badge-rec">fallback</span></td>
+      <td>Strong defaults, Chromium-based. Disable Rewards, News, Wallet. See the <a href="./firefox-privacy-hardening-guide.html">Firefox hardening guide</a> for Brave cleanup steps.</td>
+    </tr>
+    <tr>
+      <td>Chrome / Edge / Opera</td>
+      <td><span class="badge badge-skip">avoid</span></td>
+      <td>Operated by advertising companies or entities with opaque data practices.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="callout info">
+  <strong>Firefox Multi-Account Containers</strong> is one of the highest-value things you can do for browser privacy short of Arkenfox. It isolates workstreams — work tabs, personal browsing, social media, research — into separate cookie jars that cannot cross-track each other. A tracker embedded in a link can tie your RESEARCH identity to your PERSONAL one if you open it in the wrong container. See the <a href="./firefox-privacy-hardening-guide.html">Firefox hardening guide</a> for a full 8-container setup.
+</div>
+
+<h3>Search</h3>
+<table class="ub-table">
+  <thead>
+    <tr>
+      <th>Option</th>
+      <th>Type</th>
+      <th>Privacy model</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://searxng.org" target="_blank" rel="noopener">SearXNG</a></td>
+      <td><span class="badge badge-must">self-hosted</span></td>
+      <td>Queries run locally — your searches never leave your network. Runs well on a Raspberry Pi.</td>
+    </tr>
+    <tr>
+      <td><a href="https://duckduckgo.com" target="_blank" rel="noopener">DuckDuckGo</a></td>
+      <td><span class="badge badge-rec">managed</span></td>
+      <td>No user profiling, US-based. Policy-based, not technical — but a significant improvement over Google.</td>
+    </tr>
+    <tr>
+      <td>Google / Bing</td>
+      <td><span class="badge badge-skip">avoid</span></td>
+      <td>Queries tied to identity, used to build behavioral profiles.</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr>
+
+<!-- PHASE 5 -->
+<div class="section-label" id="phase5">
+  <span class="section-num">07</span>
+  <h2>Phase 5 — VPN and network</h2>
+</div>
+
+<h3>What a VPN does and does not do</h3>
+<p>A VPN encrypts traffic between your device and the VPN server, preventing your ISP from seeing your browsing. It replaces your IP address with the VPN server's IP. What it does not do: make you anonymous, protect against tracking cookies and fingerprinting, or secure traffic between the VPN server and its destination. A VPN shifts trust from your ISP to the VPN provider.</p>
+
+<div class="callout info">
+  <strong>For everyday use:</strong> <a href="https://protonvpn.com" target="_blank" rel="noopener">ProtonVPN</a> — open source clients, credible no-logs policy, Swiss jurisdiction. Integrates cleanly with the rest of the Proton ecosystem.
+</div>
+
+<h3>WireGuard for home network access</h3>
+<p>If you run a home server and want to access self-hosted services while traveling, a WireGuard tunnel is the right approach. WireGuard is modern, fast, and cryptographically clean.</p>
+
+<p>The setup: run a small VPS at a provider like <a href="https://hetzner.com" target="_blank" rel="noopener">Hetzner</a> (German provider, EU-regulated), install WireGuard on it, and configure your home network to tunnel through it. Your home services become accessible from anywhere without being exposed directly to the internet.</p>
+
+<div class="callout info">
+  <strong>WG-Easy</strong> simplifies the WireGuard configuration significantly — it provides a Docker container with a web UI for managing peers. For a single-person setup, it is more than sufficient.
+</div>
+
+<div class="callout warn">
+  <strong>Hetzner as a gateway:</strong> your VPS sees your traffic metadata, but you control the software stack. That is a better tradeoff than routing everything through a commercial VPN provider whose infrastructure you cannot inspect.
+</div>
+
+<h3>Pi-hole</h3>
+<p>If you have any home server hardware, <a href="https://pi-hole.net" target="_blank" rel="noopener">Pi-hole</a> is one of the highest-value installations you can make. It acts as a DNS sinkhole at the network level — blocking ad and tracker domains before they ever load, for every device on your network, without configuring anything on individual devices. Running it on a Raspberry Pi is the canonical setup, but any Linux machine works.</p>
+
+<hr>
+
+<!-- PHASE 6 -->
+<div class="section-label" id="phase6">
+  <span class="section-num">08</span>
+  <h2>Phase 6 — Messaging and social media</h2>
+</div>
+
+<h3>Messaging</h3>
+<table class="ub-table">
+  <thead>
+    <tr>
+      <th>App</th>
+      <th>Status</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://signal.org" target="_blank" rel="noopener">Signal</a></td>
+      <td><span class="badge badge-must">use</span></td>
+      <td>E2EE by default, open source, nonprofit. The standard for private messaging.</td>
+    </tr>
+    <tr>
+      <td><a href="https://matrix.org" target="_blank" rel="noopener">Matrix / Element</a></td>
+      <td><span class="badge badge-rec">explore</span></td>
+      <td>Decentralized, federated. Self-host your own server. Good for technical contacts.</td>
+    </tr>
+    <tr>
+      <td>WhatsApp</td>
+      <td><span class="badge badge-rec">legacy</span></td>
+      <td>Network gravity is real. Keep it for contacts who won't move. Do not use for sensitive communications.</td>
+    </tr>
+    <tr>
+      <td>Telegram</td>
+      <td><span class="badge badge-skip">avoid</span></td>
+      <td>Not E2EE by default. Opaque governance. Not a meaningful privacy improvement over WhatsApp.</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="callout info">
+  <strong>Network migration is slow by definition.</strong> Install Signal, use it with people who have it, and don't expect overnight change. The goal is to grow the Signal proportion of your contact graph over time while treating WhatsApp as a legacy fallback.
+</div>
+
+<h3>Social media</h3>
+<p>There is no privacy-respecting equivalent of Facebook, Instagram, or Twitter with comparable network effects. The mitigation options are limited:</p>
+
+<ul>
+  <li>Use Firefox Multi-Account Containers to isolate social media tabs — social sites cannot track your browsing outside their container.</li>
+  <li>Log out when not actively using platforms.</li>
+  <li>Be deliberate about what personal information you share.</li>
+</ul>
+
+<p>For longer-term migration, the <a href="https://fediverse.info" target="_blank" rel="noopener">Fediverse</a> — Mastodon, Pixelfed, Bookwyrm — is a federated network of open source social platforms. The model is sound: decentralized, user-controlled, no advertising. The network is growing. Worth building a presence there even if you maintain legacy accounts.</p>
+
+<hr>
+
+<!-- PHASE 7 -->
+<div class="section-label" id="phase7">
+  <span class="section-num">09</span>
+  <h2>Phase 7 — Local AI and the home server</h2>
+</div>
+
+<h3>Why local AI matters</h3>
+<p>Cloud AI services — ChatGPT, Gemini, most others — send your queries to third-party servers. For many tasks this is acceptable. For sensitive work, confidential documents, private research, or situations where you simply do not want your queries logged, local models are substantially better.</p>
+
+<p>The current state of open-weight models (Llama 3, Mistral, Qwen, Gemma) is genuinely capable for a wide range of tasks — summarization, drafting, coding assistance, research questions, document analysis. You will not match the largest frontier models on home hardware, but for everyday work, local models are more than adequate.</p>
+
+<h3>Starting point: Raspberry Pi 5 (16 GB)</h3>
+<p>A Pi 5 with 16 GB RAM is a reasonable entry for lightweight local AI. It handles 7B-parameter quantized models for everyday tasks at acceptable speed. Not fast — but functional, and runs continuously on minimal power.</p>
+
+<table class="ub-table">
+  <thead>
+    <tr>
+      <th>Software</th>
+      <th>Role</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://ollama.com" target="_blank" rel="noopener">Ollama</a></td>
+      <td>Model runner</td>
+      <td>Handles downloads, quantization, and serving via CLI and API. Dead simple setup.</td>
+    </tr>
+    <tr>
+      <td><a href="https://openwebui.com" target="_blank" rel="noopener">Open WebUI</a></td>
+      <td>Chat interface</td>
+      <td>Browser-based UI comparable to ChatGPT. Connects to any Ollama instance on the network.</td>
+    </tr>
+    <tr>
+      <td><a href="https://searxng.org" target="_blank" rel="noopener">SearXNG</a></td>
+      <td>Local search</td>
+      <td>Pair with Open WebUI for a local AI assistant with web search capability.</td>
+    </tr>
+    <tr>
+      <td><a href="https://pi-hole.net" target="_blank" rel="noopener">Pi-hole</a></td>
+      <td>DNS sinkhole</td>
+      <td>Run alongside the above. Handles all network-level ad and tracker blocking.</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>The next step: a dedicated home server</h3>
+<p>For more demanding workloads — larger models, image generation, document processing, running multiple services simultaneously — a dedicated machine with a GPU is the right investment. Current pragmatic options:</p>
+
+<div class="callout info">
+  <strong>Apple Silicon Mac Mini (M4 Pro or higher)</strong> — excellent performance per watt, unified memory architecture handles large models efficiently, good software ecosystem. Quiet. The right choice if you want something that just works.
+</div>
+
+<div class="callout info">
+  <strong>Mini PC with NVIDIA GPU (RTX 4060/4070 range)</strong> — more VRAM per euro, better for GPU-intensive workloads like image generation. More configuration overhead. Right choice if you want flexibility and are comfortable with Linux.
+</div>
+
+<p>Either machine can run: Ollama with larger models (13B–34B range depending on VRAM), Nextcloud for file storage, Immich for photos, and any other self-hosted services you want. Run everything in Docker containers for portability and easier maintenance.</p>
+
+<h3>NAS for long-term storage</h3>
+<p>Pair a home server with a NAS running <a href="https://www.truenas.com" target="_blank" rel="noopener">TrueNAS</a> or <a href="https://www.openmediavault.org" target="_blank" rel="noopener">OpenMediaVault</a> for resilient, self-owned storage. A Raspberry Pi with attached USB drives running OpenMediaVault is a low-cost starting point. Purpose-built NAS hardware is more reliable for long-term use.</p>
+
+<hr>
+
+<!-- SEQUENCE -->
+<div class="section-label" id="sequence">
+  <span class="section-num">10</span>
+  <h2>Migration sequence</h2>
+</div>
+
+<p>A realistic sequence that prioritizes impact and manages disruption:</p>
+
+<h3>Week 1 — Identity foundation</h3>
+<div class="steps">
+  <div class="step">
+    <input type="checkbox" class="step-check">
+    <div class="step-body">Register a personal domain</div>
+  </div>
+  <div class="step">
+    <input type="checkbox" class="step-check">
+    <div class="step-body">Set up Proton Mail with your domain on a paid plan</div>
+  </div>
+  <div class="step">
+    <input type="checkbox" class="step-check">
+    <div class="step-body">Set up Proton Pass (or KeePassXC) for passwords</div>
+  </div>
+  <div class="step">
+    <input type="checkbox" class="step-check">
+    <div class="step-body">Begin updating email in high-priority services: banking, financial accounts, healthcare</div>
+  </div>
+  <div class="step">
+    <input type="checkbox" class="step-check">
+    <div class="step-body">Notify key contacts of your new email address</div>
+  </div>
+  <div class="step">
+    <input type="checkbox" class="step-check">
+    <div class="step-body">Set up ProtonVPN</div>
+  </div>
+</div>
+
+<h3>Week 2 — Storage and browsing</h3>
+<div class="steps">
+  <div class="step">
+    <input type="checkbox" class="step-check">
+    <div class="step-body">Switch to Firefox as primary browser — install uBlock Origin and Multi-Account Containers</div>
+  </div>
+  <div class="step">
+    <input type="checkbox" class="step-check">
+    <div class="step-body">Switch default search to DuckDuckGo or self-hosted SearXNG</div>
+  </div>
+  <div class="step">
+    <input type="checkbox" class="step-check">
+    <div class="step-body">Download your Google Drive, Photos, and Keep data via Google Takeout</div>
+  </div>
+  <div class="step">
+    <input type="checkbox" class="step-check">
+    <div class="step-body">Set up Proton Drive for cloud storage, migrate important files</div>
+  </div>
+  <div class="step">
+    <input type="checkbox" class="step-check">
+    <div class="step-body">Install Signal and begin encouraging key contacts</div>
+  </div>
+</div>
+
+<h3>Week 3 — Communications and social</h3>
+<div class="steps">
+  <div class="step">
+    <input type="checkbox" class="step-check">
+    <div class="step-body">Complete email migration for remaining services</div>
+  </div>
+  <div class="step">
+    <input type="checkbox" class="step-check">
+    <div class="step-body">Enable email aliases for all new service registrations going forward</div>
+  </div>
+  <div class="step">
+    <input type="checkbox" class="step-check">
+    <div class="step-body">Evaluate social media usage — consider creating Fediverse accounts</div>
+  </div>
+</div>
+
+<h3>Week 4+ — Infrastructure</h3>
+<div class="steps">
+  <div class="step">
+    <input type="checkbox" class="step-check">
+    <div class="step-body">Set up Pi-hole on home network for DNS-level ad/tracker blocking</div>
+  </div>
+  <div class="step">
+    <input type="checkbox" class="step-check">
+    <div class="step-body">Install Ollama and Open WebUI for local AI on Raspberry Pi or home server</div>
+  </div>
+  <div class="step">
+    <input type="checkbox" class="step-check">
+    <div class="step-body">Configure WireGuard tunnel for secure remote access to home network</div>
+  </div>
+  <div class="step">
+    <input type="checkbox" class="step-check">
+    <div class="step-body">Plan next hardware investment based on actual bottlenecks — not anticipated ones</div>
+  </div>
+</div>
+
+<hr>
+
+<!-- CAVEATS -->
+<div class="section-label" id="caveats">
+  <span class="section-num">11</span>
+  <h2>Honest caveats</h2>
+</div>
+
+<div class="callout warn">
+  <strong>This is not complete privacy.</strong> You will still use services that collect data. Your ISP still sees DNS queries if you are not running encrypted DNS. Mobile operating systems have their own telemetry. Browsers leak fingerprinting data. The goal is meaningful reduction in exposure, not elimination.
+</div>
+
+<div class="callout info">
+  <strong>Threat models vary.</strong> The setup appropriate for a journalist working on sensitive sources is different from what a privacy-conscious professional needs. Most people do not need hardware security keys and air-gapped machines. They do need better passwords, less exposure to data brokers, and some resistance to behavioral surveillance.
+</div>
+
+<div class="callout info">
+  <strong>Maintenance has a cost.</strong> Self-hosted services require updates, backups, and occasional troubleshooting. This is less than most people assume — especially with Docker and reasonable defaults — but it is not zero. Size your ambitions to the maintenance burden you are actually willing to carry.
+</div>
+
+<div class="callout warn">
+  <strong>Network effects are real.</strong> You cannot unilaterally move your contacts to Signal. You cannot convince everyone you know to leave WhatsApp. Work with the network you have while building the one you want.
+</div>
+
+<hr>
+
+<!-- REFERENCE -->
+<div class="section-label" id="reference">
+  <span class="section-num">12</span>
+  <h2>Reference: key tools</h2>
+</div>
+
+<table class="ub-table">
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th>Tool</th>
+      <th>Notes</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Email provider</td>
+      <td><a href="https://proton.me" target="_blank" rel="noopener">Proton Mail</a></td>
+      <td>Swiss law, E2EE, custom domains on paid tier</td>
+    </tr>
+    <tr>
+      <td>Email aliases</td>
+      <td><a href="https://proton.me/pass" target="_blank" rel="noopener">Proton Pass</a> / <a href="https://simplelogin.io" target="_blank" rel="noopener">SimpleLogin</a></td>
+      <td>Isolate service registrations from primary address</td>
+    </tr>
+    <tr>
+      <td>Password manager</td>
+      <td><a href="https://proton.me/pass" target="_blank" rel="noopener">Proton Pass</a> + <a href="https://keepassxc.org" target="_blank" rel="noopener">KeePassXC</a></td>
+      <td>Layered approach — cloud for convenience, local for sensitive</td>
+    </tr>
+    <tr>
+      <td>Cloud storage</td>
+      <td><a href="https://proton.me/drive" target="_blank" rel="noopener">Proton Drive</a> / <a href="https://nextcloud.com" target="_blank" rel="noopener">Nextcloud</a></td>
+      <td>Proton for quick setup; Nextcloud for full self-hosted control</td>
+    </tr>
+    <tr>
+      <td>Photos</td>
+      <td><a href="https://immich.app" target="_blank" rel="noopener">Immich</a></td>
+      <td>Self-hosted Google Photos alternative with mobile auto-upload</td>
+    </tr>
+    <tr>
+      <td>Notes</td>
+      <td><a href="https://standardnotes.com" target="_blank" rel="noopener">Standard Notes</a> / <a href="https://obsidian.md" target="_blank" rel="noopener">Obsidian</a></td>
+      <td>E2EE sync vs. local-first knowledge management</td>
+    </tr>
+    <tr>
+      <td>Browser</td>
+      <td><a href="https://www.mozilla.org/firefox/" target="_blank" rel="noopener">Firefox</a></td>
+      <td>uBlock Origin + Multi-Account Containers — see <a href="./firefox-privacy-hardening-guide.html">hardening guide</a></td>
+    </tr>
+    <tr>
+      <td>Search</td>
+      <td><a href="https://searxng.org" target="_blank" rel="noopener">SearXNG</a> / <a href="https://duckduckgo.com" target="_blank" rel="noopener">DuckDuckGo</a></td>
+      <td>SearXNG if self-hosting; DDG as managed fallback</td>
+    </tr>
+    <tr>
+      <td>VPN</td>
+      <td><a href="https://protonvpn.com" target="_blank" rel="noopener">ProtonVPN</a> / <a href="https://www.wireguard.com" target="_blank" rel="noopener">WireGuard</a></td>
+      <td>ProtonVPN for general use; WireGuard for home network tunneling</td>
+    </tr>
+    <tr>
+      <td>DNS blocking</td>
+      <td><a href="https://pi-hole.net" target="_blank" rel="noopener">Pi-hole</a></td>
+      <td>Network-level ad/tracker blocking for all devices</td>
+    </tr>
+    <tr>
+      <td>Messaging</td>
+      <td><a href="https://signal.org" target="_blank" rel="noopener">Signal</a></td>
+      <td>Default for private messaging; encourage contacts; keep WhatsApp as fallback</td>
+    </tr>
+    <tr>
+      <td>Local AI</td>
+      <td><a href="https://ollama.com" target="_blank" rel="noopener">Ollama</a> + <a href="https://openwebui.com" target="_blank" rel="noopener">Open WebUI</a></td>
+      <td>Pi 5 for lightweight; GPU server for serious workloads</td>
+    </tr>
+    <tr>
+      <td>Federated social</td>
+      <td><a href="https://joinmastodon.org" target="_blank" rel="noopener">Mastodon</a> / <a href="https://pixelfed.org" target="_blank" rel="noopener">Pixelfed</a></td>
+      <td>Fediverse alternatives to Twitter/Instagram</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="callout good">
+  <strong>Final thought.</strong> The surveillance economy is not going to dismantle itself. The most durable thing you can do is shift your own infrastructure — slowly, pragmatically, without demanding perfection — toward systems you understand and control. Start with your email. Own your identity. Build from there.
+</div>
+
+<div class="footer">
+  <div class="footer-brand">
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-label="Copyleft"><circle cx="12" cy="12" r="10"/><path d="M8.5 8.5A5 5 0 1 1 8.5 15.5"/></svg> kasunben &middot; <span class="footer-date">created at <span id="date-created" data-created="2026-05-30"></span></span> &middot; <span class="footer-date">last-updated at <span id="last-updated"></span></span>
+  </div>
+  <div class="footer-tags">
+    <span>#digital-sovereignty</span>
+    <span>#degoogle</span>
+    <span>#privacy</span>
+    <span>#self-hosted</span>
+  </div>
+</div>
+
+<script src="../../js/utils.js"></script>
+</body>
+</html>
