@@ -230,12 +230,47 @@
   <p>Once you have a domain, use email aliases for every service registration. Tools like <a
       href="https://proton.me/pass" target="_blank" rel="noopener">Proton Pass</a> or <a href="https://simplelogin.io"
       target="_blank" rel="noopener">SimpleLogin</a> generate disposable addresses like
-    <code>random-alias@yourdomain.com</code> that forward to your real inbox.</p>
+    <code>random-alias@some-domain.com</code> that forward to your real inbox.</p>
 
   <div class="callout good">
     <strong>Why aliases matter:</strong> you can trace exactly which service sold your address when spam arrives. You
     can disable a single alias without touching your primary email. And your real address is never exposed to third
     parties you do not fully trust.
+  </div>
+
+  <h3>A better approach: subdomain catch-all</h3>
+  <p>Using Proton Pass aliases works, but comes with a subtle risk: those aliases live under Proton's domains (like <code>passmail.net</code> or <code>passfwd.com</code>). If you ever want to leave Proton, you would need to manually update every service you registered with those addresses. That is vendor lock-in by the back door.</p>
+  <p>A cleaner solution if you have a custom domain: create a dedicated subdomain for consumer services — for example <code>alias.yourdomain.com</code> — and add it as a secondary email domain in Proton. Then enable <strong>catch-all</strong> on that subdomain. Any email sent to <em>anything</em>@alias.yourdomain.com lands in your inbox, with no need to create addresses in advance.</p>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-n">01</div>
+      <div class="step-body">Create a subdomain in your DNS registrar — e.g. <code>alias.yourdomain.com</code><span class="note">A subdomain keeps it visually separate from your primary email domain.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-n">02</div>
+      <div class="step-body">Add the subdomain as a custom domain in Proton Mail and point its MX records at Proton</div>
+    </div>
+    <div class="step">
+      <div class="step-n">03</div>
+      <div class="step-body">Enable catch-all for that domain in Proton Mail settings<span class="note">Any address under the subdomain now routes to your inbox automatically.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-n">04</div>
+      <div class="step-body">Use <code>servicename@alias.yourdomain.com</code> when registering for any consumer service<span class="note">e.g. <code>amazon@alias.yourdomain.com</code>, <code>netflix@alias.yourdomain.com</code> — no setup required per service.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-n">05</div>
+      <div class="step-body">Set up email filters to keep your inbox clean<span class="note">Route all catch-all mail to a label or folder so it doesn't clutter your primary inbox.</span></div>
+    </div>
+  </div>
+
+  <div class="callout good">
+    <strong>Why this is better:</strong> every alias is under your own domain. If you leave Proton, you repoint the subdomain's MX records to a new provider and every alias comes with you — no manual migration per service required.
+  </div>
+
+  <div class="callout info">
+    <strong>Alternative:</strong> if you prefer not to use a subdomain, a separate second domain works just as well — point it at Proton the same way. Slightly more cost but a cleaner separation if you want to keep consumer services entirely distinct.
   </div>
 
   <hr>
