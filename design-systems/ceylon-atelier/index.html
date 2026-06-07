@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>POSTCARD.LK — Ceylon Atelier Design System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f4eee1;
+      --bg-2: #efe7d6;
+      --card: #fbf7ec;
+      --ink: #2a2620;
+      --ink-soft: #6f6557;
+      --ink-faint: #9c9082;
+      --line: rgba(42, 38, 32, .14);
+      --line-soft: rgba(42, 38, 32, .08);
+      --green: #1c4a3a;
+      --green-2: #163d30;
+      --gold: #b8902f;
+      --gold-2: #a17e26;
+      --terra: #bd4f2c;
+      --terra-2: #a3421f;
+      --serif: "Newsreader", Georgia, serif;
+      --sans: "Hanken Grotesk", system-ui, sans-serif;
+      --r: 4px;
+      --shadow: 0 1px 2px rgba(42, 38, 32, .04), 0 14px 30px -18px rgba(42, 38, 32, .32);
+      --shadow-lg: 0 30px 60px -28px rgba(42, 38, 32, .45);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      background-image: radial-gradient(circle, rgba(42, 38, 32, .10) 1px, transparent 1.4px);
+      background-size: 26px 26px;
+      color: var(--ink);
+      font-family: var(--sans);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .wrap {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 30px;
+    }
+
+    /* masthead */
+    .mast {
+      padding: 64px 0 30px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand {
+      font-family: var(--serif);
+      font-weight: 600;
+      font-size: 1.2rem;
+      color: var(--terra);
+      letter-spacing: .02em;
+    }
+
+    .mast h1 {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      line-height: 1.02;
+      letter-spacing: -.01em;
+      margin: .2em 0 0;
+    }
+
+    .mast .sub {
+      font-family: var(--serif);
+      font-style: italic;
+      color: var(--ink-soft);
+      font-size: 1.25rem;
+      margin-top: .4em;
+      max-width: 60ch;
+    }
+
+    /* section scaffolding */
+    section {
+      padding: 52px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .eyebrow {
+      font-family: var(--sans);
+      text-transform: uppercase;
+      letter-spacing: .22em;
+      font-size: .68rem;
+      font-weight: 700;
+      color: var(--terra);
+    }
+
+    .s-head {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 1.8rem;
+      margin: .25em 0 0;
+    }
+
+    .s-note {
+      font-family: var(--sans);
+      font-size: .92rem;
+      color: var(--ink-soft);
+      margin-top: 8px;
+      max-width: 64ch;
+      line-height: 1.6;
+    }
+
+    .grid {
+      display: grid;
+      gap: 16px;
+      margin-top: 26px;
+    }
+
+    .label {
+      font-family: var(--sans);
+      text-transform: uppercase;
+      letter-spacing: .16em;
+      font-size: .64rem;
+      font-weight: 700;
+      color: var(--ink-soft);
+    }
+
+    .mono {
+      font-family: var(--sans);
+      font-size: .7rem;
+      color: var(--ink-faint);
+    }
+
+    /* color cards */
+    .sw {
+      height: 120px;
+      border-radius: 6px;
+      border: 1px solid var(--line-soft);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 12px;
+      box-shadow: var(--shadow);
+    }
+
+    .sw .n {
+      font-family: var(--sans);
+      font-weight: 700;
+      font-size: .82rem;
+    }
+
+    .sw .h {
+      font-family: var(--sans);
+      font-size: .7rem;
+      opacity: .8;
+      margin-top: 2px;
+    }
+
+    /* type specimens */
+    .spec {
+      border-bottom: 1px solid var(--line-soft);
+      padding: 18px 0;
+    }
+
+    .spec:last-child {
+      border: none;
+    }
+
+    /* buttons */
+    .btn {
+      font-family: var(--sans);
+      font-weight: 700;
+      font-size: .78rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 13px 22px;
+      border-radius: var(--r);
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      line-height: 1;
+      text-decoration: none;
+    }
+
+    .btn-terra {
+      background: var(--terra);
+      color: #fff;
+      box-shadow: 0 10px 22px -14px rgba(189, 79, 44, .9);
+    }
+
+    .btn-gold {
+      background: var(--gold);
+      color: #241d06;
+      box-shadow: 0 10px 22px -14px rgba(184, 144, 47, .9);
+    }
+
+    .btn-green {
+      background: var(--green);
+      color: #f3ecdd;
+    }
+
+    .btn-line {
+      background: transparent;
+      color: var(--ink);
+      border: 1.5px solid var(--ink);
+    }
+
+    .btn-line-gold {
+      background: transparent;
+      color: var(--gold-2);
+      border: 1.5px solid var(--gold);
+    }
+
+    /* chips + filters */
+    .fchip {
+      font-family: var(--sans);
+      font-size: .74rem;
+      font-weight: 600;
+      color: var(--ink-soft);
+      background: var(--card);
+      border: 1px solid var(--line);
+      padding: 6px 12px;
+      border-radius: 16px;
+    }
+
+    .fchip.on {
+      background: var(--green);
+      color: #f3ecdd;
+      border-color: var(--green);
+    }
+
+    .fcheck {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--sans);
+      font-size: .86rem;
+      color: var(--ink);
+      padding: 5px 0;
+    }
+
+    .fcheck .box {
+      width: 16px;
+      height: 16px;
+      border: 1.5px solid var(--ink-faint);
+      border-radius: 3px;
+      display: grid;
+      place-items: center;
+      flex: none;
+    }
+
+    .fcheck.on .box {
+      background: var(--terra);
+      border-color: var(--terra);
+      color: #fff;
+    }
+
+    /* fields */
+    .field label {
+      font-family: var(--sans);
+      font-size: .72rem;
+      font-weight: 600;
+      color: var(--ink-soft);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .field input {
+      width: 100%;
+      font-family: var(--sans);
+      font-size: .9rem;
+      color: var(--ink);
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--r);
+      padding: 11px 13px;
+      outline: none;
+    }
+
+    /* badges */
+    .badge {
+      display: inline-block;
+      white-space: nowrap;
+      background: var(--gold);
+      color: #241d06;
+      font-family: var(--sans);
+      font-weight: 700;
+      font-size: .58rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: 4px 8px;
+      border-radius: 2px;
+    }
+
+    .badge.new {
+      background: var(--terra);
+      color: #fff;
+    }
+
+    /* product card */
+    .pcard {
+      width: 240px;
+    }
+
+    .pcard .frame {
+      background: var(--card);
+      border: 1px solid var(--line);
+      padding: 10px;
+      border-radius: 2px;
+      box-shadow: var(--shadow);
+    }
+
+    .pcard .art {
+      aspect-ratio: 5/4;
+      border-radius: 1px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .pcard .ttl {
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 1.12rem;
+      margin-top: 12px;
+    }
+
+    .pcard .by {
+      font-family: var(--sans);
+      font-size: .74rem;
+      color: var(--ink-faint);
+      margin-top: 3px;
+    }
+
+    .pcard .row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 11px;
+      gap: 10px;
+    }
+
+    .pcard .price {
+      font-family: var(--sans);
+      font-weight: 700;
+      font-size: .92rem;
+      white-space: nowrap;
+    }
+
+    .pcard .price s {
+      color: var(--ink-faint);
+      font-weight: 400;
+      margin-left: 6px;
+      font-size: .8rem;
+    }
+
+    .qadd {
+      font-family: var(--sans);
+      font-weight: 700;
+      font-size: .66rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: #fff;
+      background: var(--terra);
+      border: none;
+      padding: 8px 12px;
+      border-radius: 2px;
+      white-space: nowrap;
+    }
+
+    /* scene art (sample) */
+    .scene {
+      position: relative;
+      overflow: hidden;
+      background: #caa;
+      width: 100%;
+      height: 100%;
+    }
+
+    .s-sigiriya {
+      background: linear-gradient(#9cc3d6 0%, #cfe0df 52%, #e8d9b6 52%, #e3cf9f 100%);
+    }
+
+    .s-sigiriya::before {
+      content: "";
+      position: absolute;
+      left: 38%;
+      right: 30%;
+      bottom: 14%;
+      height: 54%;
+      background: linear-gradient(#b0653a, #8f4a28);
+      border-radius: 46% 54% 8% 8%/70% 66% 6% 6%;
+      box-shadow: inset -10px 0 16px rgba(0, 0, 0, .22);
+    }
+
+    .s-sigiriya .sun {
+      position: absolute;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      right: 16%;
+      top: 14%;
+      background: #e9b64a;
+    }
+
+    .s-ella {
+      background: linear-gradient(#c9dad0 0%, #acc7b3 38%, #7da473 64%, #5d8055 100%);
+    }
+
+    .s-ella::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(118deg, rgba(40, 70, 40, .16) 0 8px, transparent 8px 22px);
+    }
+
+    /* order summary mini */
+    .panel-green {
+      background: var(--green);
+      color: #f3ecdd;
+      border-radius: var(--r);
+      padding: 20px;
+    }
+
+    .panel-green .li {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(232, 200, 120, .16);
+      font-family: var(--sans);
+      font-size: .82rem;
+    }
+
+    .panel-green .li span {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .panel-green .li b {
+      color: #fbf7ec;
+      white-space: nowrap;
+    }
+
+    .panel-green .tot {
+      font-family: var(--serif);
+      font-weight: 600;
+      font-size: 1.5rem;
+      color: #e8c878;
+    }
+
+    /* nav + footer mini */
+    .navbar {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      padding: 14px 18px;
+      background: rgba(244, 238, 225, .9);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .navbar .lk {
+      font-family: var(--sans);
+      font-weight: 600;
+      font-size: .82rem;
+      color: var(--ink);
+    }
+
+    .navbar .lk.on {
+      color: var(--terra);
+    }
+
+    .langsw {
+      display: inline-flex;
+      background: var(--bg-2);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 2px;
+    }
+
+    .langsw span {
+      font-family: var(--sans);
+      font-weight: 700;
+      font-size: .68rem;
+      color: var(--ink-soft);
+      padding: 5px 9px;
+      border-radius: 14px;
+    }
+
+    .langsw span.on {
+      background: var(--green);
+      color: #f3ecdd;
+    }
+
+    .foot {
+      background: var(--green);
+      color: #dfe9e0;
+      border-radius: 8px;
+      padding: 26px;
+    }
+
+    .foot .b {
+      font-family: var(--serif);
+      font-weight: 600;
+      font-size: 1.2rem;
+      color: #e8c878;
+    }
+
+    .principles li {
+      font-family: var(--sans);
+      font-size: .95rem;
+      color: var(--ink-soft);
+      line-height: 1.7;
+      margin-bottom: 6px;
+    }
+
+    .principles b {
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <!-- MASTHEAD -->
+    <header class="mast">
+      <div class="brand">POSTCARD<span style="color:var(--terra)">.LK</span></div>
+      <div class="eyebrow" style="margin-top:18px;">Design System · v1</div>
+      <h1>Ceylon Atelier</h1>
+      <p class="sub">The visual language of the POSTCARD.LK gallery-marketplace — a curated, editorial commerce system
+        rooted in Sri Lankan heritage. Emerald, brass &amp; terracotta on warm paper.</p>
+    </header>
+
+    <!-- PRINCIPLES -->
+    <section>
+      <div class="eyebrow">00</div>
+      <div class="s-head">Principles</div>
+      <ul class="principles" style="margin-top:18px;padding-left:18px;">
+        <li><b>Gallery, not shop.</b> Artwork sits in mats and frames; generous space; restrained chrome.</li>
+        <li><b>Warm &amp; tactile.</b> Aged-paper ground with a subtle dotted grid; nothing pure white or cold.</li>
+        <li><b>Editorial serif voice.</b> Newsreader for headings &amp; prices; Hanken Grotesk for everything
+          functional.</li>
+        <li><b>Three inks, used with intent.</b> Terracotta acts (primary CTAs), brass elevates (checkout &amp;
+          accents), emerald grounds (footers &amp; summaries).</li>
+        <li><b>Multilingual by default.</b> English · සිංහල · தமிழ் — Noto Sinhala/Tamil fonts, relaxed tracking on
+          Indic scripts.</li>
+      </ul>
+    </section>
+
+    <!-- COLOR -->
+    <section>
+      <div class="eyebrow">01</div>
+      <div class="s-head">Palette</div>
+      <p class="s-note">Warm paper neutrals carry the page; three saturated postal inks do the work. Emerald and brass
+        appear together on dark surfaces; terracotta leads every primary action.</p>
+      <div class="label" style="margin-top:24px;">Surfaces &amp; ink</div>
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr));">
+        <div class="sw" style="background:var(--bg)"><span class="n">Paper</span><span class="h">#f4eee1</span></div>
+        <div class="sw" style="background:var(--bg-2)"><span class="n">Paper deep</span><span class="h">#efe7d6</span>
+        </div>
+        <div class="sw" style="background:var(--card)"><span class="n">Card stock</span><span class="h">#fbf7ec</span>
+        </div>
+        <div class="sw" style="background:var(--ink)"><span class="n" style="color:#f4eee1">Ink</span><span class="h"
+            style="color:#cabfae">#2a2620</span></div>
+        <div class="sw" style="background:var(--ink-soft)"><span class="n" style="color:#fff">Ink soft</span><span
+            class="h" style="color:#e7ded2">#6f6557</span></div>
+      </div>
+      <div class="label" style="margin-top:24px;">Postal inks</div>
+      <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr));">
+        <div class="sw" style="background:var(--terra)"><span class="n" style="color:#fff">Terracotta</span><span
+            class="h" style="color:#f6dccf">#bd4f2c · primary</span></div>
+        <div class="sw" style="background:var(--gold)"><span class="n" style="color:#241d06">Brass gold</span><span
+            class="h" style="color:#3d3009">#b8902f · elevate</span></div>
+        <div class="sw" style="background:var(--green)"><span class="n" style="color:#e8c878">Emerald</span><span
+            class="h" style="color:#9bb5a4">#1c4a3a · ground</span></div>
+        <div class="sw" style="background:var(--green-2)"><span class="n" style="color:#e8c878">Emerald deep</span><span
+            class="h" style="color:#88a394">#163d30</span></div>
+      </div>
+    </section>
+
+    <!-- TYPE -->
+    <section>
+      <div class="eyebrow">02</div>
+      <div class="s-head">Typography</div>
+      <p class="s-note">Newsreader (editorial serif) for display, titles &amp; prices. Hanken Grotesk for body, UI and
+        tracked labels.</p>
+      <div class="card" style="margin-top:24px;">
+        <div class="spec">
+          <div class="label">Display · Newsreader 500</div>
+          <div style="font-family:var(--serif);font-weight:500;font-size:2.8rem;line-height:1.05;">The Lion Rock at Dawn
+          </div>
+        </div>
+        <div class="spec">
+          <div class="label">Subhead · Newsreader Italic</div>
+          <div style="font-family:var(--serif);font-style:italic;font-size:1.4rem;color:var(--ink-soft);">Reviving the
+            timeless art of handwritten connection.</div>
+        </div>
+        <div class="spec">
+          <div class="label">Body · Hanken Grotesk 400</div>
+          <div style="font-size:1rem;line-height:1.6;max-width:62ch;">Limited Edition series by Artist Ravindu Perera.
+            Hand-pressed on 350gsm textured archival paper and posted from our Colombo workshop to anywhere in the
+            world.</div>
+        </div>
+        <div class="spec">
+          <div class="label">Label / eyebrow · Hanken 700, tracked .16–.22em uppercase</div>
+          <div class="eyebrow">Heritage Collection · Premium Hand-Crafted Mail</div>
+        </div>
+        <div class="spec">
+          <div class="label">Price · Newsreader 600</div>
+          <div style="font-family:var(--serif);font-weight:600;font-size:1.7rem;color:var(--terra);">LKR 850.00 <span
+              style="color:var(--ink-faint);text-decoration:line-through;font-size:1rem;font-weight:400;">LKR
+              1,200.00</span></div>
+        </div>
+      </div>
+      <div class="card" style="margin-top:16px;">
+        <div class="label">Multilingual — Noto Sinhala / Tamil</div>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:12px;">
+          <div>
+            <div class="mono">English</div>
+            <div style="font-family:var(--serif);font-size:1.3rem;margin-top:4px;">Send a piece of Sri Lanka</div>
+          </div>
+          <div>
+            <div class="mono">සිංහල</div>
+            <div style="font-size:1.2rem;margin-top:4px;">ලෝකයට ශ්‍රී ලංකාවේ කැබැල්ලක්</div>
+          </div>
+          <div>
+            <div class="mono">தமிழ்</div>
+            <div style="font-size:1.2rem;margin-top:4px;">இலங்கையின் ஒரு துணுக்கை</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BUTTONS -->
+    <section>
+      <div class="eyebrow">03</div>
+      <div class="s-head">Buttons</div>
+      <p class="s-note">Terracotta = primary action. Brass = checkout / elevated. Outline = secondary. Gold outline
+        reads on dark hero imagery.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:24px;">
+        <button class="btn btn-terra">Start Exploring</button>
+        <button class="btn btn-gold">Proceed to Checkout</button>
+        <button class="btn btn-line">Save to Favorites</button>
+        <button class="btn btn-green">Proceed to Secure Payment</button>
+      </div>
+      <div style="background:#3a2c20;border-radius:8px;padding:22px;margin-top:16px;display:flex;gap:14px;">
+        <button class="btn btn-terra">Start Exploring</button>
+        <button class="btn btn-line-gold">View Collections</button>
+      </div>
+    </section>
+
+    <!-- CONTROLS -->
+    <section>
+      <div class="eyebrow">04</div>
+      <div class="s-head">Filters, badges &amp; fields</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:26px;margin-top:24px;">
+        <div>
+          <div class="label" style="margin-bottom:12px;">Theme chips</div>
+          <div style="display:flex;flex-wrap:wrap;gap:7px;">
+            <span class="fchip on">Heritage</span><span class="fchip">Vintage</span><span
+              class="fchip">Modern</span><span class="fchip">Photography</span>
+          </div>
+          <div class="label" style="margin:20px 0 10px;">Occasion checks</div>
+          <div class="fcheck on"><span class="box">✓</span>Birthday</div>
+          <div class="fcheck"><span class="box"></span>Wedding</div>
+          <div class="fcheck"><span class="box"></span>Poya</div>
+        </div>
+        <div>
+          <div class="label" style="margin-bottom:12px;">Badges</div>
+          <div style="display:flex;gap:10px;"><span class="badge">Limited Edition</span><span class="badge new">New
+              Arrival</span></div>
+          <div class="label" style="margin:20px 0 10px;">Form field</div>
+          <div class="field"><label>Email (for delivery updates)</label><input value="amara@example.com" /></div>
+        </div>
+        <div>
+          <div class="label" style="margin-bottom:12px;">Order summary</div>
+          <div class="panel-green">
+            <div class="li"><span>“Lion Rock” Card</span><b>LKR 850</b></div>
+            <div class="li"><span>Handwritten Message</span><b>LKR 300</b></div>
+            <div class="li" style="border:none;"><span>Eco-Friendly Shipping</span><b>LKR 250</b></div>
+            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:12px;"><span
+                style="font-weight:700;color:#fbf7ec;font-size:.85rem;">Total</span><span class="tot">LKR 1,400</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRODUCT CARD + ARTWORK -->
+    <section>
+      <div class="eyebrow">05</div>
+      <div class="s-head">Product card &amp; artwork</div>
+      <p class="s-note">The hero object. Artwork sits in a paper frame; serif title, faint artist credit, price with
+        optional strikethrough, and a terracotta Quick Add. Catalogue art uses stylised riso prints as stand-ins for
+        real photography.</p>
+      <div style="display:flex;gap:30px;flex-wrap:wrap;margin-top:26px;align-items:flex-start;">
+        <div class="pcard">
+          <div class="frame">
+            <div class="art"><span class="badge" style="position:absolute;top:8px;left:8px;z-index:3;">Limited
+                Edition</span>
+              <div class="scene s-sigiriya"><span class="sun"></span></div>
+            </div>
+          </div>
+          <div class="ttl">The Lion Rock at Dawn</div>
+          <div class="by">By Ravindu Perera</div>
+          <div class="row"><span class="price">LKR 850<s>LKR 1,200</s></span><button class="qadd">＋ Quick Add</button>
+          </div>
+        </div>
+        <div class="pcard">
+          <div class="frame">
+            <div class="art">
+              <div class="scene s-ella"></div>
+            </div>
+          </div>
+          <div class="ttl">Misty Tea Valleys</div>
+          <div class="by">By Anusha Perera</div>
+          <div class="row"><span class="price">LKR 620</span><button class="qadd">＋ Quick Add</button></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NAV + FOOTER -->
+    <section style="border-bottom:none;">
+      <div class="eyebrow">06</div>
+      <div class="s-head">Navigation &amp; footer</div>
+      <div class="navbar" style="margin-top:24px;">
+        <span class="brand" style="font-size:1.05rem;">POSTCARD.LK</span>
+        <span class="lk on">Discover</span><span class="lk">Marketplace</span><span class="lk">Gifts</span><span
+          class="lk">Traditions</span>
+        <span style="flex:1;"></span>
+        <span class="langsw"><span class="on">EN</span><span>සිං</span><span>தமிழ்</span></span>
+      </div>
+      <div class="foot" style="margin-top:16px;">
+        <div class="b">POSTCARD.LK</div>
+        <p
+          style="font-family:var(--serif);font-style:italic;color:#bcd0c1;font-size:.95rem;margin-top:8px;max-width:40ch;">
+          Reviving the timeless art of handwritten connection through curated Sri Lankan heritage postcards.</p>
+        <div style="margin-top:14px;font-family:var(--sans);font-size:.74rem;color:#9bb5a4;letter-spacing:.04em;">© 2026
+          POSTCARD.LK — Crafted with Sri Lankan Heritage</div>
+      </div>
+    </section>
+
+    <div
+      style="padding:40px 0;text-align:center;font-family:var(--sans);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);">
+      POSTCARD.LK · Ceylon Atelier · Design System v1</div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/gh/kasunben/Annotate.js@v0.5.13/annotate.min.js"
+    data-site-id="kasunben-ds-ceyon-atelier" data-room-id="kasunben-ds-ceyon-atelier-d17b2e5a08cc"></script>
+</body>
+
+</html>
